@@ -1,0 +1,20 @@
+{
+  "name": "car-list",
+  "version": "1.0.0",
+  "description": "Car list",
+  "main": "/src/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Renato Oliveira",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "*.json"
+    ]
+  },
+  "type": "module"
+}
