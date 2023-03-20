@@ -11,9 +11,5 @@ app.use('/marcas', carList);
 
 // app.listen(port, () => console.log(`Server listening on port ${port}`));
 app.listen(port, async () => {
-  try {
-
-  } catch (error) {
-
-  }
+  console.log(`Server listening on port ${port}`);
 });
