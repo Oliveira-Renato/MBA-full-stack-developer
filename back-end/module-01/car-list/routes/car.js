@@ -2,6 +2,7 @@ import express from 'express';
 import carListJson from '../car-list.json' assert {type: 'json'};
 
 const router = express.Router();
+router.use(express.json())
 
 function handeCarList() {
   let arrayModelsTotal = [],
@@ -23,7 +24,6 @@ function handleFindMaxMinModel(pAction) {
     result = [];
 
   const { arrayModelsBrand, arrayTotalModels } = handeCarList();
-
 
   maxMinModel = pAction === 'max' ? Math.max(...arrayTotalModels) : Math.min(...arrayTotalModels);
 
@@ -70,6 +70,13 @@ function handleFindModels(pAction, pQtd) {
   return vResult;
 }
 
+function handleBrandModels(pReq) {
+  let vBrand = pReq.brand;
+  let vModels = carListJson.filter(carListJson => ((carListJson.brand).toLowerCase() === (vBrand).toLowerCase()));
+
+  return vModels ? vModels : [];
+}
+
 router.get('/', (_, res) => {
   res.send('/marcas')
 });
@@ -94,8 +101,9 @@ router.get('/listaMenosModelos/:x', (req, res, next) => {
   res.send(handleFindModels('menos', req.params.x));
 });
 
+//feito
 router.post('/listaModelos', (req, res, next) => {
-  res.send('/listaModelos')
+  res.send(handleBrandModels(req.body));
 });
 
 export default router;
