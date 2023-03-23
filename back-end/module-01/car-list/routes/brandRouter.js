@@ -1,30 +1,36 @@
 import express from 'express';
-import carListJson from '../car-list.json' assert {type: 'json'};
+import { promises as fs } from 'fs';
 
 const router = express.Router();
-router.use(express.json())
+const { readFile } = fs;
 
-function handeCarList() {
+async function getBrands() {
+  const brands = await readFile('car-list.json');
+  return JSON.parse(brands)
+}
+
+async function handeCarList() {
   let arrayModelsTotal = [],
-    listTotal = [];
+    listTotal = [],
+    brands = await getBrands();
 
-  Object.keys(carListJson).forEach((item) => {
+  Object.keys(brands).forEach((item) => {
     arrayModelsTotal.push({
-      brand: carListJson[item]['brand'],
-      total: parseInt(carListJson[item]['models'].length)
+      brand: brands[item]['brand'],
+      total: parseInt(brands[item]['models'].length)
     })
-    listTotal.push(parseInt(carListJson[item]['models'].length))
+    listTotal.push(parseInt(brands[item]['models'].length))
   })
 
   return { 'arrayModelsBrand': arrayModelsTotal, 'arrayTotalModels': listTotal };
 }
 
-function handleFindMaxMinModel(pAction) {
+async function handleFindMaxMinModel(pAction) {
   let maxMinModel = 0,
     result = [];
 
-  const { arrayModelsBrand, arrayTotalModels } = handeCarList();
-
+  const { arrayModelsBrand, arrayTotalModels } = await handeCarList();
+  console.log(arrayModelsBrand, arrayTotalModels)
   maxMinModel = pAction === 'max' ? Math.max(...arrayTotalModels) : Math.min(...arrayTotalModels);
 
   Object.keys(arrayModelsBrand).forEach((item) => {
@@ -38,8 +44,8 @@ function handleFindMaxMinModel(pAction) {
   return result;
 }
 
-function handleFindModels(pAction, pQtd) {
-  let { arrayModelsBrand } = handeCarList(),
+async function handleFindModels(pAction, pQtd) {
+  let { arrayModelsBrand } = await handeCarList(),
     vQtdModels = parseInt(pQtd),
     count = 0,
     vResult = [],
@@ -72,7 +78,7 @@ function handleFindModels(pAction, pQtd) {
 
 function handleBrandModels(pReq) {
   let vBrand = pReq.brand;
-  let vModels = carListJson.filter(carListJson => ((carListJson.brand).toLowerCase() === (vBrand).toLowerCase()));
+  let vModels = brands.filter(brands => ((brands.brand).toLowerCase() === (vBrand).toLowerCase()));
 
   return vModels ? vModels : [];
 }
@@ -82,29 +88,29 @@ router.get('/', (_, res) => {
 });
 
 //feito
-router.get('/maisModelos', (_, res) => {
-  res.send(handleFindMaxMinModel('max'));
+router.get('/maisModelos', async (_, res) => {
+  res.send(await handleFindMaxMinModel('max'));
 });
 
 //feito
-router.get('/menosModelos', (_, res) => {
-  res.send(handleFindMaxMinModel('min'));
+router.get('/menosModelos', async (_, res) => {
+  res.send(await handleFindMaxMinModel('min'));
 });
 
 //feito
-router.get('/listaMaisModelos/:x', (req, res, next) => {
-  res.send(handleFindModels('mais', req.params.x));
+router.get('/listaMaisModelos/:x', async (req, res) => {
+  res.send(await handleFindModels('mais', req.params.x));
 });
 
 //feito
-router.get('/listaMenosModelos/:x', (req, res, next) => {
-  res.send(handleFindModels('menos', req.params.x));
+router.get('/listaMenosModelos/:x', async (req, res) => {
+  res.send(await handleFindModels('menos', req.params.x));
 });
 
 //feito
-router.post('/listaModelos', (req, res, next) => {
-  res.send(handleBrandModels(req.body));
+router.post('/listaModelos', async (req, res) => {
+  res.send(await handleBrandModels(req.body));
 });
 
-export default brandRouter;
+export default router;
 
