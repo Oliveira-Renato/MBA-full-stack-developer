@@ -106,5 +106,5 @@ router.post('/listaModelos', (req, res, next) => {
   res.send(handleBrandModels(req.body));
 });
 
-export default router;
+export default brandRouter;
 
