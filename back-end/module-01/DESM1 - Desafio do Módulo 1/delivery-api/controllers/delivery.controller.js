@@ -73,6 +73,14 @@ async function updateOrderStatus(req, res, next) {
     next(error);
   }
 }
+async function mostSelledProduct(req, res, next) {
+  try {
+    res.send(await ServicesOrder.mostSelledProduct());
+    console.log('GET /mostSelledProduct');
+  } catch (error) {
+    next(error);
+  }
+}
 
 export default {
   getOrders,
@@ -82,5 +90,6 @@ export default {
   deleteOrder,
   createOrder,
   updateOrder,
-  updateOrderStatus
+  updateOrderStatus,
+  mostSelledProduct
 }

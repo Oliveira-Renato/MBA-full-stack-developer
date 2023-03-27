@@ -84,6 +84,37 @@ async function updateOrder(order) {
   return orders.pedidos[index];
 }
 
+async function mostSelledProduct() {
+  const orders = JSON.parse(await readFile(global.fileName)).pedidos;
+  let listProducts = [],
+    listFreq = [],
+    result = {},
+    count = 0;
+
+  orders.forEach((order) => {
+    listProducts.push(order.produto)
+  });
+
+  for (let i = 0; i < listProducts.length; i++) {
+    if (listFreq.indexOf(listProducts[i]) === -1) {
+      for (let j = 1; j < listProducts.length; j++) {
+        if (listProducts[i] === listProducts[j]) {
+          listFreq[i] = `${listProducts[i]}`;
+          result[i] = {
+            produto: listProducts[i],
+            quantidade: count += 1
+          }
+        }
+      }
+    }
+    count = 0;
+  }
+
+  result = Object.values(result).sort((a, b) => b.quantidade - a.quantidade);
+  return result;
+}
+
+
 export default {
   getOrders,
   getOrderByID,
@@ -91,5 +122,6 @@ export default {
   getOrdersByProduct,
   deleteOrder,
   createOrder,
-  updateOrder
+  updateOrder,
+  mostSelledProduct
 }
