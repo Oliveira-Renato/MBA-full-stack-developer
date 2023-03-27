@@ -54,10 +54,21 @@ async function createOrder(req, res, next) {
 async function updateOrder(req, res, next) {
   try {
     let order = req.body;
-    if (order.cliente || order.produto || order.valor || order.entregue) {
+    if (order.id || order.cliente || order.produto || order.valor || order.entregue) {
       res.send(await ServicesOrder.updateOrder(order));
     }
     console.log('PUT /order');
+  } catch (error) {
+    next(error);
+  }
+}
+async function updateOrderStatus(req, res, next) {
+  try {
+    let order = req.body;
+    if (order.id && order.entregue) {
+      res.send(await ServicesOrder.updateOrder(order));
+    }
+    console.log('PATCH /updateOrderStatus');
   } catch (error) {
     next(error);
   }
@@ -70,5 +81,6 @@ export default {
   getOrdersByProduct,
   deleteOrder,
   createOrder,
-  updateOrder
+  updateOrder,
+  updateOrderStatus
 }

@@ -11,8 +11,7 @@ router.get('/product/:product', OrdersController.getOrdersByProduct);//task 7
 router.delete('/deleteOrder/:id', OrdersController.deleteOrder);//task 4
 router.post('/createOrder', OrdersController.createOrder);//task 1
 router.put('/updateOrder', OrdersController.updateOrder);//task 2
-//TO UPDATE ORDER's STATUS
-router.put('/updateOrderStatus',);
+router.patch('/updateOrderStatus', OrdersController.updateOrderStatus);//task 3
 //TO GET TOTAL VALUE OF ORDERS by A PRODUCT
 //router.get('/',);
 router.use((err, req, res, nex) => {
