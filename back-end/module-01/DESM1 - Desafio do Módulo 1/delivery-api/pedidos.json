@@ -1,5 +1,5 @@
 {
-  "nextId": 501,
+  "nextId": 502,
   "pedidos": [
     {
       "id": 1,
@@ -3993,6 +3993,14 @@
       "valor": 32,
       "entregue": true,
       "timestamp": "2021-05-02T19:48:09.767Z"
+    },
+    {
+      "id": 501,
+      "cliente": "Renato Oliveira",
+      "produto": "Deca Durabolin",
+      "entregue": true,
+      "timestamp": "2023-03-27T01:18:36.886Z",
+      "valor": 32
     }
   ]
 }
