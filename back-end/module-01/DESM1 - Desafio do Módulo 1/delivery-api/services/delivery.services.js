@@ -16,7 +16,7 @@ async function getOrderByID(id) {
 async function getOrdersByClient(cliente) {
   let totalValue = 0;
   const orders = await getOrders();
-  const data = orders.pedidos.filter(order => order.cliente === cliente);
+  const data = orders.pedidos.filter(order => order.cliente === cliente && order.entregue === true);
 
   for (let idx = 0; idx < data.length; idx++) {
     totalValue = totalValue + data[idx].valor;
@@ -30,7 +30,6 @@ async function getOrdersByClient(cliente) {
 async function getOrdersByProduct(product) {
   let totalProduct = 0;
   const orders = await getOrders();
-  console.log(product)
   const data = orders.pedidos.filter(order => order.produto === product);
 
   for (let idx = 0; idx < data.length; idx++) {
@@ -47,7 +46,8 @@ async function deleteOrder(id) {
   const orders = await getOrders();
   const data = orders.pedidos.filter(order => order.id != id);
 
-  await writeFile(global.fileName, JSON.stringify(data, null, 2));
+  orders.pedidos = data;
+  await writeFile(global.fileName, JSON.stringify(orders, null, 2));
   return 'Delete Order Success';
 }
 async function createOrder(order) {
@@ -83,7 +83,6 @@ async function updateOrder(order) {
   await writeFile(global.fileName, JSON.stringify(orders, null, 2));
   return orders.pedidos[index];
 }
-
 async function mostSelledProduct() {
   const orders = JSON.parse(await readFile(global.fileName)).pedidos;
   let listProducts = [],
@@ -92,7 +91,9 @@ async function mostSelledProduct() {
     count = 0;
 
   orders.forEach((order) => {
-    listProducts.push(order.produto)
+    if (order.entregue === true) {
+      listProducts.push(order.produto)
+    }
   });
 
   for (let i = 0; i < listProducts.length; i++) {
