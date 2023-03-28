@@ -1,18 +1,19 @@
 import { promises as fs } from 'fs';
 const { readFile, writeFile } = fs;
 
+//Retorna todos os pedidos
 async function getOrders() {
   const orders = await readFile(global.fileName);
   return JSON.parse(orders);
 }
-
+//Retorna somente o pedido referente ao id passado como paramêtro
 async function getOrderByID(id) {
   const orders = await getOrders();
   const data = orders.pedidos.find(order => order.id === parseInt(id));
 
   return data;
 }
-
+//Retorna todos os pedidos referente ao cliente passado como paramêtro
 async function getOrdersByClient(cliente) {
   let totalValue = 0;
   const orders = await getOrders();
@@ -26,7 +27,7 @@ async function getOrdersByClient(cliente) {
     "valorTotal": totalValue
   };
 }
-
+//Retorna todos os pedidos referente ao produto passado como paramêtro
 async function getOrdersByProduct(product) {
   let totalProduct = 0;
   const orders = await getOrders();
@@ -42,6 +43,7 @@ async function getOrdersByProduct(product) {
     "valorTotal": totalProduct
   };
 }
+//Delete o pedido
 async function deleteOrder(id) {
   const orders = await getOrders();
   const data = orders.pedidos.filter(order => order.id != id);
@@ -50,6 +52,7 @@ async function deleteOrder(id) {
   await writeFile(global.fileName, JSON.stringify(orders, null, 2));
   return 'Delete Order Success';
 }
+//Cria um novo pedido
 async function createOrder(order) {
   const orders = await getOrders();
   let newOrder = {
@@ -66,6 +69,7 @@ async function createOrder(order) {
 
   return newOrder;
 }
+//Atualiza um pedido específico
 async function updateOrder(order) {
   const orders = await getOrders();
   const index = orders.pedidos.findIndex(ped => ped.id == order.id);
@@ -83,6 +87,7 @@ async function updateOrder(order) {
   await writeFile(global.fileName, JSON.stringify(orders, null, 2));
   return orders.pedidos[index];
 }
+//Retorna os produtos com mais pedidos em ordem decrescente
 async function mostSelledProduct() {
   const orders = JSON.parse(await readFile(global.fileName)).pedidos;
   let listProducts = [],
