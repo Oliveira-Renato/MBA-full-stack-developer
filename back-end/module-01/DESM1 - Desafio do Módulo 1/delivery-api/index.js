@@ -1,5 +1,5 @@
 import express from 'express';
-import orderRoutes from '../routes/delivery.routes.js';
+import orderRoutes from './routes/delivery.routes.js';
 
 global.fileName = 'pedidos.json';
 

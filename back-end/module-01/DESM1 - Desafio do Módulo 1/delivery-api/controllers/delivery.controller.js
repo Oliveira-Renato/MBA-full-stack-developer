@@ -10,7 +10,7 @@ async function getOrders(req, res, next) {
 }
 async function getOrderByID(req, res, next) {
   try {
-    console.log(`GET /orders  :id`);
+    console.log(`GET /orders by  :id`);
     res.send(await ServicesOrder.getOrderByID(req.params.id));
   } catch (error) {
     next(error);
@@ -74,6 +74,7 @@ async function updateOrderStatus(req, res, next) {
   }
 }
 async function mostSelledProduct(req, res, next) {
+  console.log('GET /mostSelledProduct');
   try {
     res.send(await ServicesOrder.mostSelledProduct());
     console.log('GET /mostSelledProduct');
