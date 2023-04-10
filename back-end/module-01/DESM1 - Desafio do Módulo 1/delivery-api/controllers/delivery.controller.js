@@ -65,7 +65,8 @@ async function updateOrder(req, res, next) {
 async function updateOrderStatus(req, res, next) {
   try {
     let order = req.body;
-    if (order.id && order.entregue) {
+    console.log(order.id, order.entregue)
+    if (order.id && order.entregue !== null) {
       res.send(await ServicesOrder.updateOrder(order));
     }
     console.log('PATCH /updateOrderStatus');

@@ -14,13 +14,13 @@ async function getOrderByID(id) {
 //Retorna todos os pedidos referente ao cliente passado como paramêtro
 async function getOrdersByClient(cliente) {
   const orders = await OrdersRepository.getOrders();
-  console.log(orders.pedidos)
+  //console.log(orders.pedidos)
   const totalValue = orders.pedidos
     .filter(order => order.cliente === cliente && order.entregue)
     .map(order => order.valor)
     .reduce((prev, curr) => prev + curr, 0);
 
-  return totalValue;
+  return { totalValue };
 }
 //Retorna todos os pedidos referente ao produto passado como paramêtro
 async function getOrdersByProduct(product) {
@@ -30,37 +30,21 @@ async function getOrdersByProduct(product) {
     .map((order) => order.valor)
     .reduce((prev, curr) => prev + curr, 0)
 
-  return totalValue;
+  return { totalValue };
 }
-<<<<<<< HEAD
 //Delete o pedido
-=======
-
->>>>>>> 5e4025e (need some fix)
 async function deleteOrder(id) {
   await OrdersRepository.deleteOrder(id);
 }
-<<<<<<< HEAD
 //Cria um novo pedido
-=======
-
->>>>>>> 5e4025e (need some fix)
 async function createOrder(order) {
   await OrdersRepository.createOrder(order);
 }
-<<<<<<< HEAD
 //Atualiza um pedido específico
-=======
-
->>>>>>> 5e4025e (need some fix)
 async function updateOrder(order) {
   await OrdersRepository.updateOrder(order);
 }
-<<<<<<< HEAD
 //Retorna os produtos com mais pedidos em ordem decrescente
-=======
-
->>>>>>> 5e4025e (need some fix)
 async function mostSelledProduct() {
   const orders = await OrdersRepository.getOrders();
   console.log(orders);

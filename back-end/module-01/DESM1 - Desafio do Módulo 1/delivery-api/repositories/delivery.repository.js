@@ -43,7 +43,7 @@ async function updateOrder(order) {
   orders.pedidos[index].cliente = order.cliente || orders.pedidos[index].cliente;
   orders.pedidos[index].produto = order.produto || orders.pedidos[index].produto;
   orders.pedidos[index].valor = order.valor || orders.pedidos[index].valor;
-  orders.pedidos[index].entregue = order.entregue || orders.pedidos[index].entregue;
+  orders.pedidos[index].entregue = order.entregue || false;
   orders.pedidos[index].timestamp = new Date();
 
   await writeFile(global.fileName, JSON.stringify(orders, null, 2));

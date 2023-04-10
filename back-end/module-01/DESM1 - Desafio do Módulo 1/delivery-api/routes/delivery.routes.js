@@ -5,11 +5,11 @@ const router = express.Router();
 router.use(express.json());
 
 router.get('/', OrdersController.getOrders);
-router.get('/mostSelledProduct', OrdersController.mostSelledProduct);//task 8
-router.get('/:id', OrdersController.getOrderByID);//task 5
-router.get('/client/:client', OrdersController.getOrdersByClient);//task 6
-router.get('/product/:product', OrdersController.getOrdersByProduct);//task 7
-router.delete('/deleteOrder/:id', OrdersController.deleteOrder);//task 4
+router.get('/mostSelledProduct', OrdersController.mostSelledProduct);
+router.get('/:id', OrdersController.getOrderByID);
+router.get('/client/:client', OrdersController.getOrdersByClient);
+router.get('/product/:product', OrdersController.getOrdersByProduct);
+router.delete('/deleteOrder/:id', OrdersController.deleteOrder);
 router.post('/createOrder', OrdersController.createOrder);//task 1
 router.put('/updateOrder', OrdersController.updateOrder);//task 2
 router.patch('/updateOrderStatus', OrdersController.updateOrderStatus);//task 3
