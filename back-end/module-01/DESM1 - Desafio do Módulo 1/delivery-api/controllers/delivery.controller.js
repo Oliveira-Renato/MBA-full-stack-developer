@@ -2,7 +2,7 @@ import ServicesOrder from '../services/delivery.services.js';
 
 async function getOrders(req, res, next) {
   try {
-    console.log(`GET /orders`);
+    logger.info(`GET /orders`);
     res.send(await ServicesOrder.getOrders());
   } catch (error) {
     next(error);
@@ -10,7 +10,7 @@ async function getOrders(req, res, next) {
 }
 async function getOrderByID(req, res, next) {
   try {
-    console.log(`GET /orders by  :id`);
+    logger.info(`GET /orders by  :id`);
     res.send(await ServicesOrder.getOrderByID(req.params.id));
   } catch (error) {
     next(error);
@@ -18,7 +18,7 @@ async function getOrderByID(req, res, next) {
 }
 async function getOrdersByClient(req, res, next) {
   try {
-    console.log(`GET /orders  :client`);
+    logger.info(`GET /orders  :client`);
     res.send(await ServicesOrder.getOrdersByClient(req.params.client));
   } catch (error) {
     next(error);
@@ -26,7 +26,7 @@ async function getOrdersByClient(req, res, next) {
 }
 async function getOrdersByProduct(req, res, next) {
   try {
-    console.log(`GET /orders  :product`);
+    logger.info(`GET /orders  :product`);
     res.send(await ServicesOrder.getOrdersByProduct(req.params.product));
   } catch (error) {
     next(error);
@@ -34,7 +34,7 @@ async function getOrdersByProduct(req, res, next) {
 }
 async function deleteOrder(req, res, next) {
   try {
-    console.log(`DELETE /order  :id`, req.params);
+    logger.info(`DELETE /order  :id`, req.params);
     res.send(await ServicesOrder.deleteOrder(req.params.id));
   } catch (error) {
     next(error);
@@ -46,7 +46,7 @@ async function createOrder(req, res, next) {
     if (order.cliente || order.produto || order.valor) {
       res.send(await ServicesOrder.createOrder(order));
     }
-    console.log('POST /order');
+    logger.info('POST /order');
   } catch (error) {
     next(error);
   }
@@ -57,7 +57,7 @@ async function updateOrder(req, res, next) {
     if (order.id || order.cliente || order.produto || order.valor || order.entregue) {
       res.send(await ServicesOrder.updateOrder(order));
     }
-    console.log('PUT /order');
+    logger.info('PUT /order');
   } catch (error) {
     next(error);
   }
@@ -65,20 +65,22 @@ async function updateOrder(req, res, next) {
 async function updateOrderStatus(req, res, next) {
   try {
     let order = req.body;
-    console.log(order.id, order.entregue)
-    if (order.id && order.entregue !== null) {
-      res.send(await ServicesOrder.updateOrder(order));
+
+    if (!order.id && !order.entregue !== null) {
+      throw new Error('ID and status of delivery "entregue" are required!')
     }
-    console.log('PATCH /updateOrderStatus');
+
+    logger.info('PATCH /updateOrderStatus');
+    res.send(await ServicesOrder.updateOrder(order));
   } catch (error) {
     next(error);
   }
 }
 async function mostSelledProduct(req, res, next) {
-  console.log('GET /mostSelledProduct');
+  logger.info('GET /mostSelledProduct');
   try {
     res.send(await ServicesOrder.mostSelledProduct());
-    console.log('GET /mostSelledProduct');
+    logger.info('GET /mostSelledProduct');
   } catch (error) {
     next(error);
   }

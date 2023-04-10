@@ -14,7 +14,6 @@ async function getOrderByID(id) {
 //Retorna todos os pedidos referente ao cliente passado como paramêtro
 async function getOrdersByClient(cliente) {
   const orders = await OrdersRepository.getOrders();
-  //console.log(orders.pedidos)
   const totalValue = orders.pedidos
     .filter(order => order.cliente === cliente && order.entregue)
     .map(order => order.valor)
@@ -47,7 +46,6 @@ async function updateOrder(order) {
 //Retorna os produtos com mais pedidos em ordem decrescente
 async function mostSelledProduct() {
   const orders = await OrdersRepository.getOrders();
-  console.log(orders);
   let listProducts = [];
   orders.pedidos
     .filter(order => order.entregue)
