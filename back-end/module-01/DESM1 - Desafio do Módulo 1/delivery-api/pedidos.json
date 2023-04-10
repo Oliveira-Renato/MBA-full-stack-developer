@@ -1,14 +1,6 @@
 {
-  "nextId": 501,
+  "nextId": 502,
   "pedidos": [
-    {
-      "id": 1,
-      "cliente": "Lavínia Dâmaso",
-      "produto": "Pizza Muçarela",
-      "valor": 26,
-      "entregue": true,
-      "timestamp": "2021-05-02T19:48:09.765Z"
-    },
     {
       "id": 2,
       "cliente": "Tália Simas",
@@ -3993,6 +3985,14 @@
       "valor": 32,
       "entregue": true,
       "timestamp": "2021-05-02T19:48:09.767Z"
+    },
+    {
+      "id": 501,
+      "cliente": "Renato D.Oliveira",
+      "produto": "Pizza de Durateston",
+      "valor": 50,
+      "timestamp": "2023-04-10T00:54:04.718Z",
+      "entregue": false
     }
   ]
 }
