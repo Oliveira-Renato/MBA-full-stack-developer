@@ -8,6 +8,7 @@ async function getOrders(req, res, next) {
     next(error);
   }
 }
+
 async function getOrderByID(req, res, next) {
   try {
     logger.info(`GET /orders by  :id`);
@@ -16,6 +17,7 @@ async function getOrderByID(req, res, next) {
     next(error);
   }
 }
+
 async function getOrdersByClient(req, res, next) {
   try {
     logger.info(`GET /orders  :client`);
@@ -24,6 +26,7 @@ async function getOrdersByClient(req, res, next) {
     next(error);
   }
 }
+
 async function getOrdersByProduct(req, res, next) {
   try {
     logger.info(`GET /orders  :product`);
@@ -40,6 +43,7 @@ async function deleteOrder(req, res, next) {
     next(error);
   }
 }
+
 async function createOrder(req, res, next) {
   try {
     let order = req.body;
@@ -51,6 +55,7 @@ async function createOrder(req, res, next) {
     next(error);
   }
 }
+
 async function updateOrder(req, res, next) {
   try {
     let order = req.body;
@@ -62,6 +67,7 @@ async function updateOrder(req, res, next) {
     next(error);
   }
 }
+
 async function updateOrderStatus(req, res, next) {
   try {
     let order = req.body;
@@ -76,6 +82,7 @@ async function updateOrderStatus(req, res, next) {
     next(error);
   }
 }
+
 async function mostSelledProduct(req, res, next) {
   logger.info('GET /mostSelledProduct');
   try {
