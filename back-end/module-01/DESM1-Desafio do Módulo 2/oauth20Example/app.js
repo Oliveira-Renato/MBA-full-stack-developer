@@ -6,12 +6,24 @@ const express = require('express')
   , config = require('./configuration/config')
   , app = express();
 
-var GoogleStrategy = require('passport-google-oauth20').Strategy;
+//var GoogleStrategy = require('passport-google-oauth20').Strategy;
+var FacebookStrategy = require('passport-facebook').Strategy;
 
-passport.use(new GoogleStrategy({
-  clientID: config.client_id,
-  clientSecret: config.client_secret,
-  callbackURL: config.callback_url
+// passport.use(new GoogleStrategy({
+//   clientID: config.client_id,
+//   clientSecret: config.client_secret,
+//   callbackURL: config.callback_url
+// },
+//   function (accessToken, refreshToken, profile, done) {
+//     return done(null, profile);
+//   }
+// ));
+
+passport.use(new FacebookStrategy({
+  clientID: config.facebook_app_id,
+  clientSecret: config.facebook_app_secret,
+  callbackURL: config.facebook_callback_url,
+  profileFields: ['id', 'displayName', 'photos', 'email']
 },
   function (accessToken, refreshToken, profile, done) {
     return done(null, profile);
@@ -40,10 +52,19 @@ app.get('/', function (req, res) {
   res.render('index', { user: req.user });
 });
 
-app.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
+// app.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
 
-app.get('/auth/google/callback',
-  passport.authenticate('google', { successRedirect: '/', failureRedirect: '/login' }),
+// app.get('/auth/google/callback',
+//   passport.authenticate('google', { successRedirect: '/', failureRedirect: '/login' }),
+//   function (req, res) {
+//     res.redirect('/');
+//   }
+// );
+
+app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email'] }));
+
+app.get('/auth/facebook/callback',
+  passport.authenticate('facebook', { successRedirect: '/', failureRedirect: '/login' }),
   function (req, res) {
     res.redirect('/');
   }
