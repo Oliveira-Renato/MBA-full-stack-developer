@@ -5,7 +5,7 @@ async function connect() {
     return global.connection.connect();
   }
   const pool = new pg.Pool({
-    connectionString: 'string-DB'
+    connectionString: 'stringDB'
   })
   global.connection = pool;
 
