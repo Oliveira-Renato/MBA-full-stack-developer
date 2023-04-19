@@ -9,7 +9,7 @@ const myFormat = printf(({ level, message, label, timestamp }) => {
   return `${timestamp} [${label}] ${level}: ${message}`;
 })
 
-//Logger settings
+/*Logger settings*/
 global.logger = winston.createLogger({
   level: "silly",
   transports: [
