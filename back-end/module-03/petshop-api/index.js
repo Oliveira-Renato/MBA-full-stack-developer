@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import proprietarioRouter from './routes/proprietario.route.js';
-import animalRouter from './routes/animal.route.js';
+import animalRouter from './routes/animais.route.js';
 import winston from 'winston';
 
 const { combine, label, timestamp, printf } = winston.format;

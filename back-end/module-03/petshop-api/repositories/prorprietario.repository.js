@@ -3,12 +3,10 @@ import { connect } from './db.js';
 async function getProprietarios() {
   const conn = await connect();
   try {
-    const sql = 'SELECT * FROM proprietarios';
-    const res = await conn.query(sql);
+    const res = await conn.query('SELECT * FROM proprietarios');
     return res.rows;
-
   } catch (error) {
-    throw error
+    throw error;
   } finally {
     conn.release();
   }
@@ -17,11 +15,8 @@ async function getProprietarios() {
 async function getProprietario(proprietarioID) {
   const conn = await connect();
   try {
-    const sql = 'SELECT * FROM proprietarios WHERE proprietario_id=($1)';
-    const values = [proprietarioID];
-    const res = await conn.query(sql, values);
+    const res = await conn.query('SELECT * FROM proprietarios WHERE proprietario_id=($1)', [proprietarioID]);
     return res.rows[0];
-
   } catch (error) {
     throw error;
   } finally {
@@ -36,7 +31,6 @@ async function createProprietario(proprietario) {
     const values = [proprietario.nome, proprietario.telefone];
     const res = await conn.query(sql, values);
     return res.rows[0];
-
   } catch (error) {
     throw error;
   } finally {
@@ -80,7 +74,6 @@ async function deleteProprietario(proprietarioID) {
     const deleteSQL = "DELETE FROM  proprietarios WHERE proprietario_id = ($1) RETURNING *"
     const deleteRes = await conn.query(deleteSQL, values);
     return deleteRes.rows[0];
-
   } catch (error) {
     throw error;
   } finally {
