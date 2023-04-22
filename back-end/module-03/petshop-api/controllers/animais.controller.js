@@ -4,7 +4,7 @@ import AnimaisService from "../services/animais.service.js";
 async function getAnimais(req, res, next) {
   try {
     logger.info(`GET /Animais`);
-    res.send(await AnimaisService.getAnimais(req.query.proprietario_id));
+    res.send(await AnimaisService.getAnimais(req.query.proprietarioId));
   } catch (error) {
     next(error)
   }
@@ -25,8 +25,8 @@ async function getAnimal(req, res, next) {
 async function createAnimal(req, res, next) {
   try {
     let vAnimal = req.body;
-    if (!vAnimal.nome || !vAnimal.tipo || !vAnimal.proprietario_id) {
-      throw new Error('nome e tipo e proprietario_id são obrigatórios!');
+    if (!vAnimal.nome || !vAnimal.tipo || !vAnimal.proprietarioId) {
+      throw new Error('nome e tipo e proprietarioId são obrigatórios!');
     } else {
       res.send(await AnimaisService.createAnimal(vAnimal));
       logger.info(`POST /animal - ${vAnimal}`);
@@ -39,8 +39,8 @@ async function createAnimal(req, res, next) {
 async function updateAnimal(req, res, next) {
   try {
     let vAnimal = req.body;
-    if (!vAnimal.proprietario_id || !vAnimal.nome || !vAnimal.tipo || !vAnimal.proprietario_id) {
-      throw new Error('id, nome e tipo e proprietario_id são obrigatórios!');
+    if (!vAnimal.animalId) {
+      throw new Error('id é obrigatório!');
     } else {
       res.send(await AnimaisService.updateAnimal(vAnimal));
       logger.info(`PUT /animal - ${vAnimal}`);

@@ -1,7 +1,7 @@
-import Sequelize, { INTEGER } from 'sequelize';
 import db from '../database/db.js';
+import Sequelize from 'sequelize';
 
-const Proprietario = db.difine('proprietarios', {
+const Proprietario = db.define('proprietarios', {
   proprietarioId: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
