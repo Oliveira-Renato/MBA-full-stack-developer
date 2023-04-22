@@ -71,8 +71,7 @@ async function deleteProprietario(proprietarioID) {
       throw new Error('Existe um ou mais animais registrado nesse proprietário. Processo de exclusão abortado.')
     }
 
-    const deleteSQL = "DELETE FROM  proprietarios WHERE proprietario_id = ($1) RETURNING *"
-    const deleteRes = await conn.query(deleteSQL, values);
+    const deleteRes = await conn.query("DELETE FROM  proprietarios WHERE proprietario_id = ($1) RETURNING *", values);
     return deleteRes.rows[0];
   } catch (error) {
     throw error;
