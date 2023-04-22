@@ -1,4 +1,4 @@
-import { connect } from './db.js';
+import { connect } from '../database/db.js';
 
 async function getAnimais(proprietario_id) {
   const conn = await connect();

@@ -1,4 +1,4 @@
-import { connect } from './db.js';
+import { connect } from '../database/db.js';
 
 async function getProprietarios() {
   const conn = await connect();
