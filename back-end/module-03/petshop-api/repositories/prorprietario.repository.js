@@ -40,12 +40,6 @@ async function updateProprietario(proprietario) {
 
 async function deleteProprietario(proprietarioId) {
   try {
-    const animalsByProp = await AnimaisRepository.getAnimais(proprietarioId);
-
-    if (animalsByProp.length > 0) {
-      throw new Error('Existe um ou mais animais registrado nesse proprietário. Processo de exclusão abortado.');
-    }
-
     await Proprietario.destroy({
       where: {
         proprietarioId: proprietarioId
