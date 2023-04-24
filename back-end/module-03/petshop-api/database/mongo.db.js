@@ -1,13 +1,10 @@
-import { Sequelize } from 'sequelize';
+import mongodb from 'mongodb';
+import dotenv from 'dotenv';
+dotenv.config();
 
-const sequelize = new Sequelize(
-  'stringDB',
-  {
-    dialect: 'postgres',
-    define: {
-      timestamps: false
-    }
-  }
-)
+function getClient() {
+  const uri = `${process.env.MONGO_DB}`;
+  return new mongodb.MongoClient(uri);
+}
 
-export default sequelize;
+export { getClient };

@@ -1,5 +1,4 @@
 import Proprietario from '../models/proprietario.model.js';
-import AnimaisRepository from '../repositories/animais.repository.js';
 
 async function getProprietarios() {
   try {
