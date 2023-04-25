@@ -4,7 +4,6 @@ import PostService from "../services/post.service.js";
 async function createPost(req, res, next) {
   try {
     let post = req.body;
-
     if (!post) {
       throw new Error('post é obrigatório!');
     } else {
@@ -19,7 +18,6 @@ async function createPost(req, res, next) {
 async function createComment(req, res, next) {
   try {
     let post = req.body;
-
     if (!post._id) {
       throw new Error('_id é obrigatório!');
     } else {
