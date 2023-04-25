@@ -17,7 +17,7 @@ const Servico = db.define('servicos', {
     type: Sequelize.DOUBLE,
     allowNull: false
   }
-}, { underscored: true })
+}, { underscored: true });
 
 Servico.belongsTo(Animal, { foreignKey: 'animalId' });
 
