@@ -3,7 +3,7 @@ import proprietarioController from '../controllers/proprietario.controller.js';
 
 const router = express.Router();
 
-router.get('/', (req, res) => res.send('Petshop API'));
+router.get('/', (req, res) => res.send('<h1>Petshop API</h1>'));
 router.get('/proprietario', proprietarioController.getProprietarios);
 router.get('/proprietario/:prop_id', proprietarioController.getProprietario);
 router.post('/proprietario', proprietarioController.createProprietario);
