@@ -42,4 +42,4 @@ app.use((err, req, res, nex) => {
   res.status(400).send({ error: err.message });
 })
 
-app.listen(port, console.log(`App listening on port ${port}`));
+app.listen(port, console.log(`App listening on port ${port}.`));
