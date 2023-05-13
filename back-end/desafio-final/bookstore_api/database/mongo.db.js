@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 function getClient() {
-  const uri = dbkey
+  const uri = process.env.MONGO_DB
   return new mongodb.MongoClient(uri)
 }
 
