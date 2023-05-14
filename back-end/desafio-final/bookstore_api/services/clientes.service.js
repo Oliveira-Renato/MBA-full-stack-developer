@@ -1,4 +1,4 @@
-import clientesRepository from "../repositories/clientes.repository.js";
+import clientesRepository from "../repositories/clientes.repository.js"
 
 async function getClientes(req, res, next) {
   return await clientesRepository.getClientes();
