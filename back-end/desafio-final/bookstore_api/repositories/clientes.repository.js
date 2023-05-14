@@ -20,35 +20,35 @@ async function getCliente(pClienteId) {
   }
 }
 
-async function createCliente(cliente) {
+async function createCliente(pCliente) {
   try {
-    return await Clientes.create(cliente);
+    return await Clientes.create(pCliente);
   } catch (error) {
     throw error;
   }
 }
 
-async function updateCliente(cliente) {
+async function updateCliente(pCliente) {
   try {
-    await Clientes.update(cliente, {
+    await Clientes.update(pCliente, {
       where: {
-        clienteId: cliente.cliente_id
+        clienteId: pCliente.clienteId
       }
     })
-    return await getCliente(cliente.cliente_id);
+    return await getCliente(pCliente.clienteId);
   } catch (error) {
     throw error;
   }
 }
 
-async function deleteCliente(clienteId) {
+async function deleteCliente(pCliente) {
   try {
     await Clientes.destroy({
       where: {
-        clienteId: clienteId
+        clienteId: pCliente.id
       }
     })
-    return 'PCliente excluido!'
+    return 'Cliente excluido!'
   } catch (error) {
     throw error;
   }

@@ -8,6 +8,7 @@ async function getClientes(req, res, next) {
     next(error)
   }
 }
+
 async function getCliente(req, res, next) {
   try {
     if (req.params.id) {
@@ -23,7 +24,7 @@ async function getCliente(req, res, next) {
 async function createCliente(req, res, next) {
   try {
     let cliente = req.body;
-    if (!cliente.nome || !cliente.telefone) {
+    if (!cliente.nome || !cliente.telefone || !cliente.email || !cliente.endereco || !cliente.senha) {
       throw new Error('nome e telefone são obrigatórios!');
     } else {
       res.send(await clientesService.createCliente(cliente));
@@ -37,11 +38,12 @@ async function createCliente(req, res, next) {
 async function updateCliente(req, res, next) {
   try {
     let cliente = req.body;
-    if (!cliente.cliente || !cliente.nome || !cliente.telefone) {
-      throw new Error('ID, nome e telefone são obrigatórios!');
+    console.log(cliente)
+    if (!cliente.clienteId) {
+      throw new Error('ID obrigatório!');
     } else {
-      res.send(await clientesService.updateCliente(cliente));
       logger.info(`PUT /Cliente - ${cliente}`);
+      res.send(await clientesService.updateCliente(cliente));
     }
   } catch (error) {
     next(error)
@@ -51,7 +53,7 @@ async function updateCliente(req, res, next) {
 async function deleteCliente(req, res, next) {
   try {
     if (req.params.id) {
-      res.send(await clientesService.deleteCliente(req.params.id));
+      res.send(await clientesService.deleteCliente(req.params));
       logger.info(`DELETE /Cliente  ID - `, req.params.id);
     }
     throw new Error('ID obrigatório para exclusão!');
