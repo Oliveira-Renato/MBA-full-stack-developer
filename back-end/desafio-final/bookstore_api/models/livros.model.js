@@ -1,6 +1,6 @@
 import { Sequelize } from 'sequelize'
-import sequelize from '../database/postgres.db.js'
-import Cliente from './clientes.model.js';
+import { sequelize } from '../database/postgres.db.js'
+import Autor from './autores.model.js';
 
 const Livro = sequelize.define('livros', {
   livroId: {
@@ -23,6 +23,6 @@ const Livro = sequelize.define('livros', {
   }
 }, { underscored: true })
 
-Livro.belongsTo(Cliente, { foreignKey: 'clienteId' });
+Livro.belongsTo(Autor, { foreignKey: 'autorId' });
 
 export default Livro

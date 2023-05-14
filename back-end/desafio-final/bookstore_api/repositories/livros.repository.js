@@ -2,9 +2,7 @@ import Livros from '../models/livros.model.js'
 
 async function getLivros() {
   try {
-    return await Livros.findAll({
-      attributes: { exclude: ['senha'] }
-    });
+    return await Livros.findAll();
   } catch (error) {
     throw error;
   }
