@@ -1,5 +1,5 @@
 import { Sequelize } from 'sequelize'
-import sequelize from '../database/postgres.db.js'
+import { sequelize } from '../database/postgres.db.js'
 
 const Autor = sequelize.define('autores', {
   autorId: {

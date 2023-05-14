@@ -3,6 +3,7 @@ import cors from 'cors'
 import winston from 'winston'
 
 import clientesRouter from './routes/clientes.route.js'
+import autoresRouter from './routes/autores.route.js'
 
 const app = express()
 const port = 3000
@@ -29,7 +30,10 @@ global.logger = winston.createLogger({
 
 app.use(express.json())
 app.use(cors())
+/* Routes */
 app.use('/', clientesRouter)
+app.use('/autores', autoresRouter)
+
 app.use((err, req, res, nex) => {
   logger.error(`${req.method} ${req.baseUrl} ${err.message}`)
   res.status(400).send({ error: err.message })
