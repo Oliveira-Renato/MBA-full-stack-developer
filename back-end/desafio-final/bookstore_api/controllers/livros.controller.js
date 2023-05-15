@@ -3,7 +3,8 @@ import livrosService from "../services/livros.service.js"
 async function getLivros(req, res, next) {
   try {
     logger.info(`GET /Livros`);
-    res.send(await livrosService.getLivros());
+    console.log(req.query)
+    res.send(await livrosService.getLivros(parseInt(req.query.autor_id)));
   } catch (error) {
     next(error)
   }

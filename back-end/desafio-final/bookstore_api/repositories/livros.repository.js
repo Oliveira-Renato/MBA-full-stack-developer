@@ -1,7 +1,14 @@
 import Livros from '../models/livros.model.js'
 
-async function getLivros() {
+async function getLivros(autorId) {
   try {
+    if (autorId) {
+      return await Livros.findAll({
+        where: {
+          autorId: autorId
+        }
+      });
+    }
     return await Livros.findAll();
   } catch (error) {
     throw error;

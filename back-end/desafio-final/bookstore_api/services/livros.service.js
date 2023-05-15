@@ -1,8 +1,8 @@
 import livroInfoRepository from "../repositories/livroInfo.repository.js"
 import livrosRepository from "../repositories/livros.repository.js"
 
-async function getLivros(req, res, next) {
-  return await livrosRepository.getLivros()
+async function getLivros(autorId) {
+  return await livrosRepository.getLivros(autorId)
 }
 
 async function getLivro(pLivroId) {
