@@ -31,11 +31,11 @@ async function updateLivroInfo(req, res, next) {
 async function createAvaliacao(req, res, next) {
   try {
     let params = req.body;
-    if (!params.livroId || !params.review) {
-      throw new Error("Livro ID e Avaliacao são obrigatórios.");
+    if (!req.params.id) {
+      throw new Error("Livro ID obrigatórios.");
     }
-    await livroInfoService.createAvaliacao(params.review, params.livroId);
-    logger.info(`POST /livro/review`);
+    await livroInfoService.createAvaliacao(params, req.params.id);
+    logger.info(`POST /livro/avaliacoes`);
     res.end();
   } catch (err) {
     next(err);
@@ -45,7 +45,7 @@ async function createAvaliacao(req, res, next) {
 async function deleteAvaliacao(req, res, next) {
   try {
     await livroInfoService.deleteAvaliacao(req.params.id, req.params.index);
-    logger.info(`DELETE /livro/${req.params.id}/review/${req.params.index}`);
+    logger.info(`DELETE /livro/${req.params.id}/avaliacao/${req.params.index}`);
     res.end();
   } catch (err) {
     next(err);

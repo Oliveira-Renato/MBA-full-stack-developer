@@ -33,20 +33,20 @@ async function getLivroInfo(livroId) {
   }
 }
 
-async function createReview(review, livroId) {
+async function createAvaliacao(review, livroId) {
   try {
     const livroInfo = await getLivroInfo(livroId);
-    livroInfo.reviews.push(review);
+    livroInfo.avaliacoes.push(review);
     await updateLivroInfo(livroInfo);
   } catch (err) {
     throw err;
   }
 }
 
-async function deleteReview(livroId, index) {
+async function deleteAvaliacao(livroId, index) {
   try {
     const livroInfo = await getLivroInfo(livroId);
-    livroInfo.reviews.splice(index, 1);
+    livroInfo.avaliacoes.splice(index, 1);
     await updateLivroInfo(livroInfo);
   } catch (err) {
     throw err;
@@ -78,8 +78,8 @@ export default {
   createLivroInfo,
   updateLivroInfo,
   getLivrosInfo,
-  createReview,
-  deleteReview,
+  createAvaliacao,
+  deleteAvaliacao,
   getLivroInfo,
   deleteLivroInfo
 }
