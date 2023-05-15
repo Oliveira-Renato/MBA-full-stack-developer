@@ -1,15 +1,15 @@
 import mongoose from "mongoose"
-import AvaliacoesSchema from "./avaliacoes.schema"
+import AvaliacoesSchema from "./avaliacoes.schema.js"
 
 const LivroInfoSchema = new mongoose.Schema(
   {
-    "livroId": Integer,
+    "livroId": Number,
     "descricao": String,
-    "paginas": Integer,
+    "paginas": Number,
     "editora": String,
     "avaliacoes": [AvaliacoesSchema]
 
-  }, { collection: "livroInfo" }
+  }, { collection: "bookstore" }
 )
 
 export default LivroInfoSchema

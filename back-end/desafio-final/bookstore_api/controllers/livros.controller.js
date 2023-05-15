@@ -11,11 +11,8 @@ async function getLivros(req, res, next) {
 
 async function getLivro(req, res, next) {
   try {
-    if (req.params.id) {
-      res.send(await livrosService.getLivro(req.params.id));
-      logger.info(`GET /Livro  ID - `, req.params.id);
-    }
-    throw new Error('ID obrigatório para consulta!');
+    res.send(await livrosService.getLivro(req.params.id));
+    logger.info(`GET /Livro  ID - `, req.params.id);
   } catch (error) {
     next(error);
   }

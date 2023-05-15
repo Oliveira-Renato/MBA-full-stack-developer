@@ -5,6 +5,7 @@ import winston from 'winston'
 import clientesRouter from './routes/clientes.route.js'
 import autoresRouter from './routes/autores.route.js'
 import livrosRouter from './routes/livros.route.js'
+//import livroInfoRouter from './routes/livroInfo.route.js'
 
 const app = express()
 const port = 3000
@@ -35,6 +36,8 @@ app.use(cors())
 app.use('/', clientesRouter)
 app.use('/autores', autoresRouter)
 app.use('/livros', livrosRouter)
+//app.use('/livros', livroInfoRouter)
+
 app.use((err, req, res, nex) => {
   logger.error(`${req.method} ${req.baseUrl} ${err.message}`)
   res.status(400).send({ error: err.message })

@@ -3,9 +3,9 @@ import mongoose from "mongoose"
 const AvaliacoesSchema = new mongoose.Schema(
   {
     "nome": String,
-    "nota": Integer,
+    "nota": Number,
     "avaliacao": String
-  }, { collection: "livroInfo" }
+  }, { collection: "bookstore" }
 )
 
 export default AvaliacoesSchema
