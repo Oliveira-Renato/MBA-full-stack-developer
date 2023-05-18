@@ -1,7 +1,7 @@
 import vendasRepository from "../repositories/vendas.repository.js"
 
-async function getVendas(autorId) {
-  return await vendasRepository.getVendas(autorId)
+async function getVendas(vendaId, livroId) {
+  return await vendasRepository.getVendas(vendaId, livroId)
 }
 
 async function getVenda(pVendaId) {
