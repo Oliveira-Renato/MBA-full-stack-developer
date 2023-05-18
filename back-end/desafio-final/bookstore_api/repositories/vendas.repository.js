@@ -1,4 +1,5 @@
 import Vendas from '../models/vendas.model.js'
+import { Op } from 'sequelize';
 
 async function getVendas(vendaId, livroId) {
   try {
@@ -12,7 +13,9 @@ async function getVendas(vendaId, livroId) {
     if (livroId) {
       return await Vendas.findAll({
         where: {
-          livroId: livroId
+          livroId: {
+            [Op.in]: livroId
+          }
         }
       });
     }

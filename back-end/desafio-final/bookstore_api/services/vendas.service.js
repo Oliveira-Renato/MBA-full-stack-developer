@@ -1,7 +1,18 @@
+import livrosRepository from "../repositories/livros.repository.js"
 import vendasRepository from "../repositories/vendas.repository.js"
 
-async function getVendas(vendaId, livroId) {
-  return await vendasRepository.getVendas(vendaId, livroId)
+async function getVendas(vendaId, livroId, autorId) {
+  const livrosId = []
+  if (autorId) {
+    await livrosRepository.getLivros(autorId).then(res => {
+      for (let i = 0; i < res.length; i++) {
+        livrosId.push(res[i]['livroId']);
+      }
+    })
+    console.log(livrosId)
+  }
+  livrosId.push(livroId)
+  return await vendasRepository.getVendas(vendaId, livrosId)
 }
 
 async function getVenda(pVendaId) {

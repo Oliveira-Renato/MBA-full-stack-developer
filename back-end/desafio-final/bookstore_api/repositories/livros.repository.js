@@ -7,7 +7,7 @@ async function getLivros(autorId) {
         where: {
           autorId: autorId
         }
-      });
+      }, { raw: true });
     }
     return await Livros.findAll();
   } catch (error) {
