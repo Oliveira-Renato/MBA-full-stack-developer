@@ -4,7 +4,7 @@ async function getVendas(req, res, next) {
   try {
     logger.info(`GET /Vendas`);
     console.log(req.query)
-    res.send(await vendasService.getVendas(parseInt(req.query.cliente_id)));
+    res.send(await vendasService.getVendas(req.query.cliente_id, req.query.livro_id));
   } catch (error) {
     next(error)
   }

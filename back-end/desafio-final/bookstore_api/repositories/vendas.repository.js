@@ -1,11 +1,18 @@
 import Vendas from '../models/vendas.model.js'
 
-async function getVendas(vendaId) {
+async function getVendas(vendaId, livroId) {
   try {
     if (vendaId) {
       return await Vendas.findAll({
         where: {
           clienteId: vendaId
+        }
+      });
+    }
+    if (livroId) {
+      return await Vendas.findAll({
+        where: {
+          livroId: livroId
         }
       });
     }
