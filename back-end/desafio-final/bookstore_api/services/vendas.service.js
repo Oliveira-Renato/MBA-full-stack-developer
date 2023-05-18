@@ -23,10 +23,12 @@ async function getVenda(pVendaId) {
 async function createVenda(pVenda) {
   let estoque = 0
   let valor = 0
+
   await livrosRepository.getLivro(pVenda.livroId).then(res => {
     estoque = parseInt(res['estoque'])
     valor = parseInt(res['valor'])
   })
+
   if (estoque > 0) {
     const dataAtual = new Date();
     const dia = String(dataAtual.getDate()).padStart(2, '0');
@@ -39,14 +41,12 @@ async function createVenda(pVenda) {
       livroId: pVenda.livroId,
       estoque: estoque - 1
     })
+
     pVenda.valor = valor
     pVenda.data = dataFormatada
+
     return await vendasRepository.createVenda(pVenda)
   }
-}
-
-async function updateVenda(pVenda) {
-  return await vendasRepository.updateVenda(pVenda)
 }
 
 async function deleteVenda(pVenda) {
@@ -55,7 +55,6 @@ async function deleteVenda(pVenda) {
 
 export default {
   createVenda,
-  updateVenda,
   deleteVenda,
   getVendas,
   getVenda

@@ -33,21 +33,6 @@ async function createVenda(req, res, next) {
   }
 }
 
-async function updateVenda(req, res, next) {
-  try {
-    let livro = req.body;
-    console.log(livro)
-    if (!livro.livroId) {
-      throw new Error('ID obrigatório!');
-    } else {
-      logger.info(`PUT /Venda - ${livro}`);
-      res.send(await vendasService.updateVenda(livro));
-    }
-  } catch (error) {
-    next(error)
-  }
-}
-
 async function deleteVenda(req, res, next) {
   try {
     if (req.params.id) {
@@ -62,7 +47,6 @@ async function deleteVenda(req, res, next) {
 
 export default {
   createVenda,
-  updateVenda,
   deleteVenda,
   getVendas,
   getVenda

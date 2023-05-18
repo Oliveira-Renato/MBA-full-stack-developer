@@ -10,7 +10,7 @@ async function getVendas(vendaId, livroId) {
         }
       });
     }
-    if (livroId.lenght > 0) {
+    if (livroId.length > 0) {
       return await Vendas.findAll({
         where: {
           livroId: {
@@ -41,19 +41,6 @@ async function createVenda(pVenda) {
   }
 }
 
-async function updateVenda(pVenda) {
-  try {
-    await Vendas.update(pVenda, {
-      where: {
-        vendaId: pVenda.vendaId
-      }
-    })
-    return await getVenda(pVenda.vendaId);
-  } catch (error) {
-    throw error;
-  }
-}
-
 async function deleteVenda(pVenda) {
   try {
     await Vendas.destroy({
@@ -69,7 +56,6 @@ async function deleteVenda(pVenda) {
 
 export default {
   createVenda,
-  updateVenda,
   deleteVenda,
   getVendas,
   getVenda
