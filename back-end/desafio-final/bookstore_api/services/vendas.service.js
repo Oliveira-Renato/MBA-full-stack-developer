@@ -9,7 +9,6 @@ async function getVendas(vendaId, livroId, autorId) {
         livrosId.push(res[i]['livroId']);
       }
     })
-    console.log(livrosId)
   }
   livrosId.push(livroId)
   return await vendasRepository.getVendas(vendaId, livrosId)
@@ -22,7 +21,28 @@ async function getVenda(pVendaId) {
 }
 
 async function createVenda(pVenda) {
-  return await vendasRepository.createVenda(pVenda)
+  let estoque = 0
+  let valor = 0
+  await livrosRepository.getLivro(pVenda.livroId).then(res => {
+    estoque = parseInt(res['estoque'])
+    valor = parseInt(res['valor'])
+  })
+  if (estoque > 0) {
+    const dataAtual = new Date();
+    const dia = String(dataAtual.getDate()).padStart(2, '0');
+    const mes = String(dataAtual.getMonth() + 1).padStart(2, '0');
+    const ano = dataAtual.getFullYear();
+
+    const dataFormatada = `${ano}/${mes}/${dia}`;
+
+    await livrosRepository.updateLivro({
+      livroId: pVenda.livroId,
+      estoque: estoque - 1
+    })
+    pVenda.valor = valor
+    pVenda.data = dataFormatada
+    return await vendasRepository.createVenda(pVenda)
+  }
 }
 
 async function updateVenda(pVenda) {

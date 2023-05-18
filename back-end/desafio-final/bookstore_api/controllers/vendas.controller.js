@@ -21,12 +21,12 @@ async function getVenda(req, res, next) {
 
 async function createVenda(req, res, next) {
   try {
-    let livro = req.body;
-    if (!livro.nome || !livro.valor) {
-      throw new Error('nome, email e telefone são obrigatórios!');
+    let venda = req.body;
+    if (!venda.clienteId || !venda.livroId) {
+      throw new Error('cliente id e livro id são obrigatórios!');
     } else {
-      res.send(await vendasService.createVenda(livro));
-      logger.info(`POST /Venda - ${livro}`);
+      res.send(await vendasService.createVenda(venda));
+      logger.info(`POST /Venda - ${venda}`);
     }
   } catch (error) {
     next(error)

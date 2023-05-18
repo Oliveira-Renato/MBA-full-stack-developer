@@ -10,7 +10,7 @@ async function getVendas(vendaId, livroId) {
         }
       });
     }
-    if (livroId) {
+    if (livroId.lenght > 0) {
       return await Vendas.findAll({
         where: {
           livroId: {
