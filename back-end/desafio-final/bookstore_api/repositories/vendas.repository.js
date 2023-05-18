@@ -5,7 +5,7 @@ async function getVendas(vendaId) {
     if (vendaId) {
       return await Vendas.findAll({
         where: {
-          vendaId: vendaId
+          clienteId: vendaId
         }
       });
     }
