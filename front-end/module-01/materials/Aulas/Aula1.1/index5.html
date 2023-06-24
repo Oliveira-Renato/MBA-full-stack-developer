@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style type="text/css">
+        div, p, a {
+            padding: 15px 30px;
+            display: block;
+            border: 2px solid #000;
+            background: #fff;
+        }
+    </style>
+    <title>Aula 1 Propagacao de Eventos - Bubbling</title>
+</head>
+<body>
+    <div>DIV
+        <p>P
+            <a href="#">A</a>
+        </p>
+    </div>
+
+    <script>
+        let elements = document.querySelectorAll("div, p, a");
+        
+        function showTagName() {
+            alert("Captura: "+ this.tagName);
+        }
+
+        for(let elem of elements)
+        {
+            elem.addEventListener("click", showTagName, true);
+        }
+    </script>
+
+</body>
+</html>

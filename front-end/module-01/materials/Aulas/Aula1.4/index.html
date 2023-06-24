@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Aula 1.4 Eventos do Teclado Keydown</title>
+</head>
+<body>
+    <p>Exemplo do evento de input</p>
+    <br>
+    Texto: <input type="text" id="a" value="">
+</body>
+
+<script>
+    let inp = document.getElementById('a');
+
+    inp.addEventListener('keydown', funcKeyDown, false);
+    inp.addEventListener('keyup', funcKeyUp, false);
+
+    function funcKeyDown( event ){
+        event.target.style.background = "blue";
+    }
+
+    function funcKeyUp( event ) {
+        event.target.style.background = "white"
+    }
+
+
+</script>
+
+</html>

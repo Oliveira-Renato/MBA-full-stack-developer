@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Aula 1.3 - MouseEvent - Ordem de execucao</title>
+</head>
+<body>
+    <input id='inp' value="Clique aqui" type button>
+    <textarea id='txta'></textarea>
+    <input type="button" onclick="txta.value=''" value="Clear">
+</body>
+
+<script>
+    let inp = document.getElementById('inp');
+
+    inp.addEventListener('click', log);
+    inp.addEventListener('mousedown', log);
+    inp.addEventListener('mouseup', log);
+    inp.addEventListener('contextmenu', log);
+    inp.addEventListener('dbclick', log);
+
+    function log (event) {
+        document.getElementById('txta').value += event.type + ' [target: '+ event.which + ']\n';
+        document.getElementById('txta').scrollTop = document.getElementById('txta').scrollHeight;
+    }
+
+</script>
+</html>
