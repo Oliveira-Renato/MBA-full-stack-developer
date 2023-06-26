@@ -3,7 +3,6 @@ async function makeupProducts() {
   try {
     const req = await fetch('http://makeup-api.herokuapp.com/api/v1/products.json')
     const products = await req.json()
-
     //retorna uma lista de produtos ordenadas pela avaliação
     return products.sort((a, b) => b.rating - a.rating);
   } catch (error) {
@@ -13,113 +12,136 @@ async function makeupProducts() {
 
 //EXEMPLO DO CÓDIGO PARA UM PRODUTO
 async function productItem(pProduct) {
-  const products = pProduct ? pProduct : await makeupProducts();
-  const catalog = document.querySelector('.catalog') 
-  let item = '<div><h2>Nenhum produto disponivel!</h2></div>'
+  const convertPrice = (value) => (value * 5.5).toFixed(2);//loading
+  const catalog = document.querySelector('.catalog');
+  const loading = `
+      <div class="loading">
+        <div class="spinner-border" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+    `
+  catalog.innerHTML = loading;
+  let item = `<div><h2>Nenhum produto disponivel!</h2></div>`;
 
-  function convertPrice(value) {
-    const convertedValue = value * 5.5;
-    const formattedValue = convertedValue.toFixed(2);
-    return formattedValue;
-  }
+  try {
+    const products = pProduct ? pProduct : await makeupProducts();
 
-  if(products.length > 0) {
-    item = ''//description
-
-    for(elem in products) {
-      let price = products[elem]['price'] === null ? 0 : convertPrice(products[elem]['price'])
-      let category = products[elem]['category'] === null ? '' : products[elem]['category']
-      
-      item += `<div class="product" onclick="loadDetails(event)" data-name="${products[elem]['name']}" data-brand="${products[elem]['brand']}" data-type="${products[elem]['product_type']}" tabindex="${products[elem]['id']}" data-category="${category}" data-rating="${products[elem]['rating']}" data-price="${price}" ">
-      <figure class="product-figure">
-        <img src="${products[elem]['image_link']}" width="215" height="215" alt="${products[elem]['name']}" onerror="javascript:this.src='img/unavailable.png'">
-      </figure>
-      <section class="product-description">
-        <h1 class="product-name">${products[elem]['name']}</h1>
-        <div class="product-brands"><span class="product-brand background-brand">${products[elem]['brand']}</span>
-    <span class="product-brand background-price">R$ ${price}</span></div>
-  </section>
-  <div class="description" id="${products[elem]['id']}"></div>
-</div>`;
+    if(products.length > 0) {
+      item = ''//description
+  
+      for(elem in products) {
+        let price = products[elem]['price'] === null ? 0 : convertPrice(products[elem]['price'])
+        let category = products[elem]['category'] === null ? '' : products[elem]['category']
+        
+        item += `<div class="product" onclick="loadDetails(event)" data-name="${products[elem]['name']}" data-brand="${products[elem]['brand']}" data-type="${products[elem]['product_type']}" tabindex="${products[elem]['id']}" data-category="${category}" data-rating="${products[elem]['rating']}" data-price="${price}" ">
+          <figure class="product-figure">
+            <img src="${products[elem]['image_link']}" width="215" height="215" alt="${products[elem]['name']}" onerror="javascript:this.src='./img/unavailable.png'">
+          </figure>
+          <section class="product-description">
+            <h1 class="product-name">${products[elem]['name']}</h1>
+            <div class="product-brands"><span class="product-brand background-brand">${products[elem]['brand']}</span>
+        <span class="product-brand background-price">R$ ${price}</span></div>
+      </section>
+      <div class="description" id="${products[elem]['id']}"></div>
+    </div>`;
+      }
     }
+  } catch (error) {
+    console.log(error)
   }
-  catalog.innerHTML = item
+ catalog.innerHTML = item
 }
 
 //Pega as marcas e retorna no select
 async function getBrands() {
-  const products = await makeupProducts();
-  const selectElement = document.getElementById('filter-brand');
-  const uniqueBrands = new Set();
-  // Itera sobre os dados da API e adiciona as opções ao select
-  products.forEach(product => {
-    const brand = product.brand;
-
-    if(product !== null) {
-      uniqueBrands.add(brand);
-    }
-  });
-
-  // Adiciona as marcas únicas como opções ao select
-  uniqueBrands.forEach(brand => {
-    const option = document.createElement('option');
-    option.value = brand;
-    option.textContent = brand;
-    selectElement.appendChild(option);
-  });
-
-  // Adiciona os eventos de escuta aos campos de filtro
-  selectElement.addEventListener('change', function () {
-    const filterBrandValue = selectElement.value.toLowerCase();
-    const filteredProducts = products.filter(product => (filterBrandValue === '' || product.brand === filterBrandValue));
-
-    filteredProducts.length > 0 && productItem(filteredProducts)
-  });
-
+  try {
+    const selectElement = document.getElementById('filter-brand');
+    await makeupProducts().then(products => {
+      const uniqueBrands = new Set();
+      // Itera sobre os dados da API e adiciona as opções ao select
+      products.forEach(product => {
+        const brand = product.brand;
+  
+        if(brand !== null) {
+          uniqueBrands.add(brand);
+        }
+      });
+  
+      // Adiciona as marcas únicas como opções ao select
+      uniqueBrands.forEach(brand => {
+        const option = document.createElement('option');
+        option.value = brand;
+        option.textContent = brand;
+        selectElement.appendChild(option);
+      });
+  
+      // Adiciona os eventos de escuta aos campos de filtro
+      selectElement.addEventListener('change', function () {
+        const filterBrandValue = selectElement.value.toLowerCase();
+        const filteredProducts = products.filter(product => (filterBrandValue === '' || product.brand === filterBrandValue));
+  
+        filteredProducts.length > 0 && productItem(filteredProducts)
+      });
+    });
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 //Pega as marcas e retorna no select
 async function getCategories() {
-  const products = await makeupProducts();
-  const selectElement = document.getElementById('filter-type');
-  const uniqueCategory = new Set();
-  // Itera sobre os dados da API e adiciona as opções ao select
-  products.forEach(product => {
-    const category = product.category;
+  try {
+    const selectElement = document.getElementById('filter-type');
+    await makeupProducts().then(products => {
+      if(products.length > 0) {
+        const uniqueCategory = new Set();
+        // Itera sobre os dados da API e adiciona as opções ao select
+        products.forEach(product => {
+          let category = product.category;
+          if(category !== null) {
+            uniqueCategory.add(category);
+          }
+        });
 
-    if(product !== null) {
-      uniqueCategory.add(category);
-    }
-  });
+        // Adiciona as marcas únicas como opções ao select
+        uniqueCategory.forEach(category => {
+          const option = document.createElement('option');
+          option.value = category;
+          option.textContent = category;
+          selectElement.appendChild(option);
+        });
 
-  // Adiciona as marcas únicas como opções ao select
-  uniqueCategory.forEach(category => {
-    const option = document.createElement('option');
-    option.value = category;
-    option.textContent = category;
-    selectElement.appendChild(option);
-  });
+        // Adiciona os eventos de escuta aos campos de filtro
+        selectElement.addEventListener('change', function () {
+          const filterCategoryValue = selectElement.value.toLowerCase();
+          const filteredProducts = products.filter(product => (filterCategoryValue === '' || product.category === filterCategoryValue));
 
-  // Adiciona os eventos de escuta aos campos de filtro
-  selectElement.addEventListener('change', function () {
-    const filterCategoryValue = selectElement.value.toLowerCase();
-    const filteredProducts = products.filter(product => (filterCategoryValue === '' || product.category === filterCategoryValue));
-
-    filteredProducts.length > 0 && productItem(filteredProducts)
-  });
+          filteredProducts.length > 0 && productItem(filteredProducts)
+        }); 
+      }
+    });
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 //Pega as marcas e retorna no select
 async function getProductByName() {
-  const productsData = await makeupProducts();
-  const filterInput = document.getElementById('filter-name');
-  // Adiciona o evento de escuta ao campo de filtro de nome
-  filterInput.addEventListener('input', function () {
-    const filterValue = this.value.toLowerCase();
-    const filteredProducts = productsData.filter(product => product.name.toLowerCase().includes(filterValue));
-
-    filteredProducts.length > 0 && productItem(filteredProducts)
-  })
+  try {
+    const filterInput = document.getElementById('filter-name');
+    await makeupProducts().then(productsData => {
+      // Adiciona o evento de escuta ao campo de filtro de nome
+      filterInput.addEventListener('input', function () {
+        const filterValue = this.value.toLowerCase();
+        const filteredProducts = productsData.filter(product => product.name.toLowerCase().includes(filterValue));
+  
+        filteredProducts.length > 0 && productItem(filteredProducts)
+      })
+    });
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 //EXEMPLO DO CÓDIGO PARA OS DETALHES DE UM PRODUTO
@@ -169,8 +191,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   await getBrands()
   await getCategories()
   await getProductByName()
-
-  const productDetail = document.querySelector('')
 });
 
 

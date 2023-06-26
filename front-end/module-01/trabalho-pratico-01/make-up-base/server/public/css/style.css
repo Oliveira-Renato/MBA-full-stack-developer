@@ -211,3 +211,9 @@ main {
   color: #fff;
   padding: 0 0.2rem;
 }
+
+.loading {
+  position: absolute;
+  left: 50%;
+  right: 50%;
+}
