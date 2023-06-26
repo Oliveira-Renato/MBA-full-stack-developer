@@ -36,7 +36,7 @@ async function productItem(pProduct) {
         
         item += `<div class="product" onclick="loadDetails(event)" data-name="${products[elem]['name']}" data-brand="${products[elem]['brand']}" data-type="${products[elem]['product_type']}" tabindex="${products[elem]['id']}" data-category="${category}" data-rating="${products[elem]['rating']}" data-price="${price}" ">
           <figure class="product-figure">
-            <img src="${products[elem]['image_link']}" width="215" height="215" alt="${products[elem]['name']}" onerror="javascript:this.src='./img/unavailable.png'">
+            <img src="${products[elem]['image_link']}" width="215" height="215" alt="${products[elem]['name']}" onerror="javascript:this.error===null;this.src='./img/unavailable.png'">
           </figure>
           <section class="product-description">
             <h1 class="product-name">${products[elem]['name']}</h1>
