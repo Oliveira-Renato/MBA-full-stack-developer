@@ -7,7 +7,20 @@
     <title>Aula 1 - Manipulador inline</title>
 </head>
 <body>
-    <button type="button" onclick="alert('Você clicou no botão!');">Click aqui</button>
-    <a href="#" onclick="alert('Você clicou no link!');">Click aqui</a>
+    <button type="button" id="button">Click aqui</button>
+    <script>
+        const unicodeID = (function(){
+            let count = 0;
+            return function handleID() {
+                ++count;
+                return count
+            }
+        })()
+        
+        const logCurrying = 
+        date => 
+        type =>
+        message => console.log(`[${date.getHours()}:${date.getMinutes()}] [${type}] [${message}]`)
+    </script>
 </body>
 </html>

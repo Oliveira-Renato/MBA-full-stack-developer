@@ -12,10 +12,21 @@
     <title>Aula 1 Propagacao de Eventos - Bubbling</title>
 </head>
 <body>
-    <div onclick="alert('Borbulhamento: ' + this.tagName)">DIV
-        <p onclick="alert('Borbulhamento: ' + this.tagName)">P
-            <a href="#" onclick="alert('Borbulhamento: '+ this.tagName)">A</a>
+    <div>DIV
+        <p>P
+            <a href="#">A</a>
         </p>
     </div>
+    <script>
+        function handleEvent(e) {
+            alert('Evento acionado ' + this.tagName)
+            e.stopPropagation()
+        }
+        let nodeList = document.querySelectorAll('div,p,a')
+        for(let elem of nodeList) {
+            elem.addEventListener('click', handleEvent)
+        }
+        
+    </script>
 </body>
 </html>
