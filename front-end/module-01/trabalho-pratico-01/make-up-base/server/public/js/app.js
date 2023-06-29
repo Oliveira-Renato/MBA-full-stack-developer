@@ -9,6 +9,40 @@ async function makeupProducts() {
     console.log(error)
   }
 }
+//FILTRO PADRÃO
+async function handleFilter() {
+  //Option value =1 => Melhor Avaliados
+  //Option value =2 => Menores Preços
+  //Option value =3 => Maiores Preços
+  //Option value =4 => A-Z
+  //Option value =5 => Z-A
+  const filterInput = document.getElementById('sort-type');
+  await makeupProducts().then(products => {
+    if(products.length > 0) {
+      filterInput.addEventListener('change', function() {
+        const filterOption = Number(filterInput.value);
+
+        switch(filterOption) {
+          case 2:
+            return products.sort((a, b) => a.price - b.price);
+            break;
+          case 3:
+            return products.sort((a, b) => b.price - a.price);
+            break;
+          case 4:
+            return products.sort((a, b) => b.name - a.name);
+            break;
+          case 5:
+            return products.sort((a, b) => a.name - b.name);
+            break;
+          default:
+            return products.sort((a, b) => b.rating - a.rating);
+            break;
+        }
+      })
+    }
+  })
+}
 
 //EXEMPLO DO CÓDIGO PARA UM PRODUTO
 async function productItem(pProduct) {
@@ -98,7 +132,7 @@ async function getCategories() {
         const uniqueCategory = new Set();
         // Itera sobre os dados da API e adiciona as opções ao select
         products.forEach(product => {
-          let category = product.category;
+          let category = product.product_type;
           if(category !== null) {
             uniqueCategory.add(category);
           }
@@ -115,7 +149,7 @@ async function getCategories() {
         // Adiciona os eventos de escuta aos campos de filtro
         selectElement.addEventListener('change', function () {
           const filterCategoryValue = selectElement.value.toLowerCase();
-          const filteredProducts = products.filter(product => (filterCategoryValue === '' || product.category === filterCategoryValue));
+          const filteredProducts = products.filter(product => (filterCategoryValue === '' || product.product_type === filterCategoryValue));
 
           filteredProducts.length > 0 && productItem(filteredProducts)
         }); 
@@ -191,6 +225,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   await getBrands()
   await getCategories()
   await getProductByName()
+  await handleFilter()
 });
 
 
