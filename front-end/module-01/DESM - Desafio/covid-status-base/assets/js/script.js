@@ -33,3 +33,8 @@ function handleDecimals(pNumber) {
 
   return vFormattedNumber.replaceAll(',','.');
 }
+
+
+(async () => {
+  await handleKPIinfo()
+})()
