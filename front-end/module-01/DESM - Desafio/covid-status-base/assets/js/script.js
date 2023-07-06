@@ -7,6 +7,7 @@ async function getCovidData() {
     console.error(error);
   }
 }
+//GET API DATA BY COUNTRIES
 async function getCovidDataByCountries() {
   try {
     const response = await axios.get('https://disease.sh/v3/covid-19/countries');
@@ -17,7 +18,6 @@ async function getCovidDataByCountries() {
     console.error(error);
   }
 }
-
 //OUTPUT THE KPI DATA IN THE KPI SECTION INFO
 async function handleKPIinfo() {
   try {
@@ -127,7 +127,6 @@ async function handleBarGraphyInfo() {
     },
   });
 }
-
 //FORMAT NUMBER TO DECIMALS
 function handleDecimals(pNumber) {
   let vNumber = pNumber;
