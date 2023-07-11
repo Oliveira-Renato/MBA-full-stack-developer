@@ -29,22 +29,23 @@ export default function Investments() {
 
   const handlePercentValues = () => {
     Object.values(newData).forEach((array,jdx) => {
-      
+      const armazenaPorcent = []
       let previousValue = 0
 
       if(previousValue !== array.length - 1) {
         for (let i = 0; i < array.length; i++) {
           if(i === 0 ) {
-            porcentagemValores.push('0');
+            armazenaPorcent.push('0');
           } else {
             ++previousValue
             const currentValue = array[i - 1].value;
             const nextValue = array[previousValue].value;
             const result = calculaPorcentagem(currentValue, nextValue);
-            porcentagemValores.push(result);
+            armazenaPorcent.push(result);
           }
         }
       }
+      porcentagemValores.push(armazenaPorcent)
     })
   }
 
@@ -57,7 +58,14 @@ export default function Investments() {
             <h4 className='text-center font-bold text-gray-900'>{description[idx]}</h4>
             <h3 className='text-center text-gray-600'>
               Rendimento Total: R$: {rendimentoTotal[idx]}
-              <span className='pl-4 porcentagem'>({rendimentoPorcentagemTotal[idx]})</span>
+              
+              { 
+                rendimentoPorcentagemTotal[idx].indexOf('-') > - 1 ?
+                <span className='pl-4 text-red-500'>({rendimentoPorcentagemTotal[idx]})</span>
+                : 
+                <span className='pl-4 text-green-500'>({rendimentoPorcentagemTotal[idx]})</span>
+              }
+              
             </h3>
             {     
               array.map((investment, investmentIdx) => (
@@ -65,7 +73,14 @@ export default function Investments() {
                   <p className='relative'>
                     {investment['month']}/{investment['year']}  
                     <span className='ml-4 pr-1'>R$</span> {parseFloat(investment['value']).toFixed(2)}
-                    <span className='absolute right-0 porcentagem'>{porcentagemValores[investmentIdx]}</span>
+
+                    { 
+                      porcentagemValores[idx][investmentIdx].indexOf('-') > - 1 ?
+                      <span className='absolute right-0 text-red-500'>{porcentagemValores[idx][investmentIdx]}</span>
+                      : 
+                      <span className='absolute right-0 text-green-500'>{porcentagemValores[idx][investmentIdx]}</span>
+                    }
+                    
                   </p>
                   <hr />
                 </div>  
