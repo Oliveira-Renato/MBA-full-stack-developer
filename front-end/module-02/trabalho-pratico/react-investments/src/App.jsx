@@ -7,7 +7,7 @@ function App() {
     <div className="App">
         <Header>React Investments</Header>
         <main>
-          <Investments></Investments>
+          <Investments />
         </main>
     </div>
   );
