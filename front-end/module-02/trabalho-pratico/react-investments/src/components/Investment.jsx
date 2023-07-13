@@ -7,7 +7,7 @@ export default function Investments() {
   const investments = data.investments;
   const reports = data.reports;
 
-  const investmentItems = investments.map((investment, idx) => {
+  const investmentItems = investments.map(investment => {
     const filteredReports = reports.filter(report => report.investmentId === investment.id);
     const sortedReports = filteredReports.sort((a, b) => a.month - b.month);
     const rendimento = sortedReports[sortedReports.length - 1].value - sortedReports[0].value;
@@ -39,6 +39,8 @@ export default function Investments() {
     });
   };
 
+  const percentColor = (pRendimento) => pRendimento.indexOf('-') > -1 ? 'text-red-500' : 'text-green-500'
+
   const porcentagemValores = handlePercentValues();
   
   return (
@@ -52,7 +54,7 @@ export default function Investments() {
 
               <span 
                 id='rendimento_value'
-                className={`pl-4 ${investment.rendimentoPorcentagem.indexOf('-') > -1 ? 'text-red-500' : 'text-green-500'}`}>
+                className={`pl-4 ${percentColor(investment.rendimentoPorcentagem)}`}>
                   ({investment.rendimentoPorcentagem})
               </span>
             </h3>
