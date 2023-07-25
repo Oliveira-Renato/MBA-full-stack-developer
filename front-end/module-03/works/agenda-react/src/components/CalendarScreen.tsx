@@ -12,6 +12,10 @@ import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 
+import IconButton from '@mui/material/IconButton';
+import Icon from '@mui/material/Icon';
+import Avatar from '@mui/material/Avatar';
+
 const DAYS_OF_WEEK = ['DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SÁB']
 
 export function CalendarScreen() {
@@ -41,8 +45,29 @@ export function CalendarScreen() {
       </Box>
 
       <TableContainer component={"div"}>
+        <Box sx={{ display: "flex", alignItems: "center", padding: "8px 16px" }}>
+          <Box>
+            <IconButton arial-label="mês anterior">
+              <Icon>chevron_left</Icon>
+            </IconButton>
+            <IconButton arial-label="próximo mês">
+              <Icon>chevron_right</Icon>
+            </IconButton>
+          </Box>
+          <Box sx={{ marginLeft: "16px", flex: "1" }} component={"h3"}>
+            Julho de 2023
+          </Box>
+
+          <IconButton arial-label="Usuário">
+            <Avatar>
+              <Icon>person</Icon>
+            </Avatar>
+          </IconButton>
+        </Box>
+
         <Table sx={{
           minHeight: "100%",
+          borderTop: "1px solid rgb(224, 224, 224)",
           "& td ~ td, th ~ th": {
             border: "1px solid rgb(224, 224, 224)"
           }
