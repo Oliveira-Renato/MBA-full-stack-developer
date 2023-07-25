@@ -1,10 +1,8 @@
-import Button from '@material-ui/core/Button';
+import { CalendarScreen } from './components/CalendarScreen';
 
 function App() {
   return (
-    <Button variant="contained" color="primary">
-      Hello World
-    </Button>
+    <CalendarScreen />
   );
 }
 
