@@ -19,6 +19,7 @@ import Avatar from '@mui/material/Avatar';
 const DAYS_OF_WEEK = ['DOM', 'SEG', 'TER', 'QUA', 'QUI', 'SEX', 'SÁB']
 
 export function CalendarScreen() {
+  const weeks = generateCalendar(getToday())
 
   return (
     <Box sx={{
@@ -80,26 +81,51 @@ export function CalendarScreen() {
             </TableRow>
           </TableHead>
           <TableBody>
-
-            <TableRow>
-              {DAYS_OF_WEEK.map((day) => (
-                <TableCell align="center" key={day}>x</TableCell>
-              ))}
-            </TableRow>
-            <TableRow>
-              {DAYS_OF_WEEK.map((day) => (
-                <TableCell align="center" key={day}>x</TableCell>
-              ))}
-            </TableRow>
-            <TableRow>
-              {DAYS_OF_WEEK.map((day) => (
-                <TableCell align="center" key={day}>x</TableCell>
-              ))}
-            </TableRow>
-
+            {weeks.map((week, idx) => (
+              <TableRow>
+                {week.map((cell) => (
+                  <TableCell align="center" key={cell.date}>
+                    {cell.date}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </TableContainer>
     </Box>
   )
+}
+
+interface ICalendarCell {
+  date: string
+}
+
+function generateCalendar(date: string): ICalendarCell[][] {
+  const weeks: ICalendarCell[][] = []
+  const jsDate = new Date(date + 'T12:00:00')
+  const currentMonth = jsDate.getMonth()
+
+  const currentDay = new Date(jsDate.valueOf())
+  currentDay.setDate(1)
+  const dayOfWeek = currentDay.getDay()
+  currentDay.setDate(1 - dayOfWeek)
+
+  do {
+    const week: ICalendarCell[] = []
+    for (let idx = 0; idx < DAYS_OF_WEEK.length; idx++) {
+      const monthStr = (currentDay.getMonth() * 1).toString().padStart(2, '0')
+      const dayStr = currentDay.getDay().toString().padStart(2, '0')
+      const isoDate = `${currentDay.getFullYear()}-${monthStr}-${dayStr}`
+      week.push({ date: isoDate })
+      currentDay.setDate(currentDay.getDate() + 1)
+    }
+    weeks.push(week)
+  } while (currentDay.getMonth() === currentMonth)
+
+  return weeks;
+}
+
+function getToday() {
+  return '2023-07-25'
 }
