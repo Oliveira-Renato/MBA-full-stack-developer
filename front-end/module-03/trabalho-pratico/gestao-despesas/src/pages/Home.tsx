@@ -31,6 +31,13 @@ export function Home() {
     return Array.from(newYear) || ['']
   }
 
+  function handleDespesaTotal() {
+    const valorDespesas = despesas.map(despesa => despesa.valor)
+    const total = valorDespesas.reduce((a, b) => b + a)
+
+    return (total.toFixed(2)).toString().replace('.', ',')
+  }
+
   return (
     <Box
       sx={{ padding: '40px' }}>
@@ -40,7 +47,7 @@ export function Home() {
           <SelectFilter data={handleData()} />
         </Box>
         <Box sx={{ flex: '1', textAlign: 'right' }}>
-          Despesas total: <strong>R$123</strong>
+          Despesa total: <strong>R$ {handleDespesaTotal()}</strong>
         </Box>
       </Box>
       {/* table */}
