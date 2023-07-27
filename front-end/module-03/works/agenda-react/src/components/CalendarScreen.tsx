@@ -82,7 +82,7 @@ export function CalendarScreen() {
           </TableHead>
           <TableBody>
             {weeks.map((week, idx) => (
-              <TableRow>
+              <TableRow key={idx}>
                 {week.map((cell) => (
                   <TableCell align="center" key={cell.date}>
                     {cell.date}
@@ -114,9 +114,10 @@ function generateCalendar(date: string): ICalendarCell[][] {
   do {
     const week: ICalendarCell[] = []
     for (let idx = 0; idx < DAYS_OF_WEEK.length; idx++) {
-      const monthStr = (currentDay.getMonth() * 1).toString().padStart(2, '0')
-      const dayStr = currentDay.getDay().toString().padStart(2, '0')
+      const monthStr = (currentDay.getMonth() + 1).toString().padStart(2, '0')
+      const dayStr = currentDay.getDate().toString().padStart(2, '0')
       const isoDate = `${currentDay.getFullYear()}-${monthStr}-${dayStr}`
+      console.log(isoDate)
       week.push({ date: isoDate })
       currentDay.setDate(currentDay.getDate() + 1)
     }

@@ -19,8 +19,9 @@ export default function SelectFilter({ data }: { data?: string[] }) {
   const navigate = useNavigate();
 
   const handleYear = (event: SelectChangeEvent) => {
+    let newMonth = Number(month) + 1
     setYear(event.target.value);
-    navigate('/despesas/' + event.target.value + '-' + month.toString().padStart(2, "0"));
+    navigate('/despesas/' + event.target.value + '-' + newMonth.toString().padStart(2, "0"));
   }
   const handleMonth = (event: SelectChangeEvent) => {
     let newMonth = Number(event.target.value) + 1
