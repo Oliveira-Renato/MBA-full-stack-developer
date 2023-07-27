@@ -2,23 +2,29 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+
 import { useState } from 'react';
+
+import { useNavigate } from 'react-router-dom';
 
 const MES = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Desembro']
 
-export default function SelectFilter({
-  data }: {
-    data?: string[]
-  }) {
+
+export default function SelectFilter({ data }: { data?: string[] }) {
   const [year, setYear] = useState<string>('2020');
   const [month, setMonth] = useState<string>('0');
+
   const yearFilter = data || [];
+
+  const navigate = useNavigate();
 
   const handleYear = (event: SelectChangeEvent) => {
     setYear(event.target.value);
+    navigate('/despesas/' + event.target.value + '-' + month.toString().padStart(2, "0"));
   }
   const handleMonth = (event: SelectChangeEvent) => {
     setMonth(event.target.value);
+    navigate('/despesas/' + year + '-' + event.target.value.toString().padStart(2, "0"));
   }
 
   return (

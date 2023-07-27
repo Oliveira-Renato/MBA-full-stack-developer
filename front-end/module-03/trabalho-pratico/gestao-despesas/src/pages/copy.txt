@@ -4,18 +4,35 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 import { getDespesas, getDespesasEndpoint } from '../server/backend';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IDespesas } from '../types/types';
 import { Box } from '@mui/system';
 import SelectFilter from '../components/Select';
 import { useParams } from 'react-router-dom';
 
 export function Home() {
-  const { datafilter } = useParams();
+  const { data } = useParams();
+  const teste = data || ''
   const [despesas, setDespesas] = useState<IDespesas[]>([])
   const [years, setYears] = useState<IDespesas[]>([])
-  const despesasRef = useRef(despesas);
+  const [total, setTotal] = useState<string>('0')
+
+  useEffect(() => {
+    (async () => {
+      if (despesas.length === 0) {
+        if (teste !== '' && teste !== undefined) {
+          let anoMes = teste.split('-')
+          const data = await getDespesas(anoMes[0], anoMes[1])
+          setDespesas(data)
+        } else {
+          setDespesas(await getDespesasEndpoint())
+        }
+        setYears(await getDespesasEndpoint())
+      }
+    })()
+  }, [data])
 
   function handleData(): string[] {
     let data = years.map(despesa => despesa.mes)
@@ -31,41 +48,10 @@ export function Home() {
   function handleDespesaTotal() {
     if (despesas.length > 0) {
       const valorDespesas = despesas.map(despesa => despesa.valor)
-      const total = valorDespesas.reduce((a, b) => b + a)
-
-      return (total.toFixed(2)).toString().replace('.', ',')
+      const valortotal = (valorDespesas.reduce((a, b) => b + a)).toFixed(2).toString().replace('.', ',')
+      setTotal(valortotal)
     }
-    return '0'
   }
-
-  useEffect(() => {
-    async function getData() {
-      try {
-        if (datafilter) {
-          let newData = datafilter.split('-')
-          const datafilterReturn: IDespesas[] | [] = await getDespesas(newData[0], newData[1]);
-          return datafilterReturn;
-        } else {
-          throw new Error('no filter')
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        return [];
-      }
-    }
-
-    (async () => {
-      const newData = await getData();
-      if (despesasRef.current.length !== newData.length) {
-        setDespesas(newData);
-      }
-      despesasRef.current = newData;
-    })();
-  }, [datafilter, despesas])
-
-  useEffect(() => {
-    (async () => { setYears(await getDespesasEndpoint()) })()
-  }, [])
 
   return (
     <Box
@@ -76,11 +62,11 @@ export function Home() {
           <SelectFilter data={handleData()} />
         </Box>
         <Box sx={{ flex: '1', textAlign: 'right' }}>
-          Despesa total: <strong>R$ {handleDespesaTotal()}</strong>
+          Despesa total: <strong>R$ {total}</strong>
         </Box>
       </Box>
       {/* table */}
-      <TableContainer component={"div"}>
+      <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650, margin: '20px' }} aria-label="simple table">
           <TableHead>
             <TableRow>
