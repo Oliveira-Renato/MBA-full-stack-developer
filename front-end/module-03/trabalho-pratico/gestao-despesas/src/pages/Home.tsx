@@ -69,7 +69,7 @@ export function Home() {
 
   return (
     <Box
-      sx={{ padding: '40px' }}>
+      sx={{ padding: '20px 40px' }}>
       {/* filtro */}
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Box>
@@ -80,14 +80,14 @@ export function Home() {
         </Box>
       </Box>
       {/* table */}
-      <TableContainer component={"div"}>
-        <Table sx={{ minWidth: 650, margin: '20px' }} aria-label="simple table">
+      <TableContainer sx={{ marginTop: '12px', borderTop: '1px solid rgb(244,244,244)' }} component={"div"}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
             <TableRow>
-              <TableCell align="center">Despesa</TableCell>
-              <TableCell align="center">Categorias</TableCell>
-              <TableCell align="center">Dias</TableCell>
-              <TableCell align="center">Valor (R$)</TableCell>
+              <TableCell sx={{ fontSize: '16px' }} align="center">Despesa</TableCell>
+              <TableCell sx={{ fontSize: '16px' }} align="center">Categorias</TableCell>
+              <TableCell sx={{ fontSize: '16px' }} align="center">Dias</TableCell>
+              <TableCell sx={{ fontSize: '16px' }} align="center">Valor (R$)</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

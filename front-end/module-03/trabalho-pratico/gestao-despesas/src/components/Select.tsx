@@ -12,7 +12,7 @@ const MES = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho'
 
 export default function SelectFilter({ data }: { data?: string[] }) {
   const [year, setYear] = useState<string>('2020');
-  const [month, setMonth] = useState<string>('0');
+  const [month, setMonth] = useState<string>('01');
 
   const yearFilter = data || [];
 
@@ -23,8 +23,9 @@ export default function SelectFilter({ data }: { data?: string[] }) {
     navigate('/despesas/' + event.target.value + '-' + month.toString().padStart(2, "0"));
   }
   const handleMonth = (event: SelectChangeEvent) => {
+    let newMonth = Number(event.target.value) + 1
     setMonth(event.target.value);
-    navigate('/despesas/' + year + '-' + event.target.value.toString().padStart(2, "0"));
+    navigate('/despesas/' + year + '-' + newMonth.toString().padStart(2, "0"));
   }
 
   return (
