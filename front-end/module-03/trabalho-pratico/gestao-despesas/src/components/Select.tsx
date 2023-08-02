@@ -3,9 +3,9 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
-import { useState } from 'react';
-
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useEventCallback } from '@material-ui/core';
 
 const MES = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Desembro']
 
@@ -14,10 +14,11 @@ export default function SelectFilter({ data }: { data?: string[] }) {
   const { datafilter } = useParams();
   const navigate = useNavigate();
 
-  const currentMonth = datafilter !== undefined ? (datafilter.split('-'))[1] : '1'
+  const currentMonth = datafilter ? (datafilter.split('-'))[1] : '1'
+  const currentYear = datafilter ? (datafilter.split('-'))[0] : '2020'
 
-  const [year, setYear] = useState<string>('2020');
-  const [month, setMonth] = useState<string>(currentMonth);
+  const [year, setYear] = useState<string>(currentYear);
+  const [month, setMonth] = useState<Number>(Number(currentMonth) - 1);
   const yearFilter = data || [];
 
   const handleYear = (event: SelectChangeEvent) => {
@@ -27,9 +28,14 @@ export default function SelectFilter({ data }: { data?: string[] }) {
   }
   const handleMonth = (event: SelectChangeEvent) => {
     let newMonth = Number(event.target.value) + 1
-    setMonth(event.target.value);
+    setMonth(Number(event.target.value));
     navigate('/despesas/' + year + '-' + newMonth.toString().padStart(2, "0"));
   }
+
+  useEffect(() => {
+    setYear(currentYear)
+    setMonth(Number(currentMonth) - 1)
+  }, [currentMonth, currentYear])
 
   return (
     <div>
@@ -54,12 +60,12 @@ export default function SelectFilter({ data }: { data?: string[] }) {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={month || currentMonth}
+          value={month.toString()}
           label="Mês"
           onChange={handleMonth}
         >
           {MES.map((fMes, idx) => (
-            <MenuItem key={fMes} value={idx || currentMonth}>{fMes}</MenuItem>
+            <MenuItem key={fMes} value={idx}>{fMes}</MenuItem>
           ))}
         </Select>
       </FormControl>
