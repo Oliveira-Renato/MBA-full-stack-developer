@@ -1,9 +1,3 @@
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
 import { getDespesas, getDespesasEndpoint } from '../server/backend';
 import { useEffect, useRef, useState } from 'react';
 import { IDespesas } from '../types/types';
@@ -11,6 +5,7 @@ import { Box } from '@mui/system';
 import SelectFilter from '../components/Select';
 import { useParams } from 'react-router-dom';
 import { TableComponent } from '../components/TableComponent';
+import { Header } from '../components/Header';
 
 export function Home() {
   const { datafilter } = useParams();
@@ -70,7 +65,9 @@ export function Home() {
 
   return (
     <Box
-      sx={{ padding: '20px 40px' }}>
+      sx={{ padding: '0 40px' }}>
+      {/* header */}
+      < Header />
       {/* filtro */}
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Box>
