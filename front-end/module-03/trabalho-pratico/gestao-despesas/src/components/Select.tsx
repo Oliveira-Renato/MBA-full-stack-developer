@@ -5,18 +5,20 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 import { useState } from 'react';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const MES = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Desembro']
 
 
 export default function SelectFilter({ data }: { data?: string[] }) {
-  const [year, setYear] = useState<string>('2020');
-  const [month, setMonth] = useState<string>('01');
-
-  const yearFilter = data || [];
-
+  const { datafilter } = useParams();
   const navigate = useNavigate();
+
+  const currentMonth = datafilter !== undefined ? (datafilter.split('-'))[1] : '1'
+
+  const [year, setYear] = useState<string>('2020');
+  const [month, setMonth] = useState<string>(currentMonth);
+  const yearFilter = data || [];
 
   const handleYear = (event: SelectChangeEvent) => {
     let newMonth = Number(month) + 1
@@ -52,12 +54,12 @@ export default function SelectFilter({ data }: { data?: string[] }) {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={month}
+          value={month || currentMonth}
           label="Mês"
           onChange={handleMonth}
         >
           {MES.map((fMes, idx) => (
-            <MenuItem key={fMes} value={idx}>{fMes}</MenuItem>
+            <MenuItem key={fMes} value={idx || currentMonth}>{fMes}</MenuItem>
           ))}
         </Select>
       </FormControl>
