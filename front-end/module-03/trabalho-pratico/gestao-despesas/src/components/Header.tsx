@@ -14,10 +14,8 @@ export function Header() {
         flex: '1',
         flexDirection: 'collumn',
         alignItems: 'center',
-        justifyContent: 'right',
-        gap: '16px'
+        justifyContent: 'right'
       }}>
-        <span>Olá visitante</span>
         <Login />
       </Box>
     </Box>
