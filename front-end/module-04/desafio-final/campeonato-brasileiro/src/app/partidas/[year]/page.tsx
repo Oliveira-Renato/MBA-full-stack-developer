@@ -18,10 +18,10 @@
 
 //   return (
 //     <>
-//       <h2>{product.title}</h2>
+//       <h2>titulo</h2>
 //       <div>
 //         <p>
-//           {product.description}
+//           description
 //         </p>
 //       </div>
 //     </>
@@ -29,10 +29,10 @@
 // }
 
 // export async function generateStaticParams() {
-//   const productSData: Promise<IPartidas[]> = getCampeonatos()
+//   const productSData: Promise<IPartidas[]> = getPartidas()
 //   const products = await productSData
 
 //   return products.map(products => ({
-//     productId: products.id.toString()
+//     productId: products.numero.toString()
 //   }))
 // }
