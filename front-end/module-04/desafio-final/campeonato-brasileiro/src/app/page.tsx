@@ -39,15 +39,12 @@ export default function Home() {
   const [data, setData] = useState<IAnos[]>([])
   const [resultados, setResultados] = useState<ITeam>({})
   const [times, setTimes] = useState<string[]>([])
-  const [age, setAge] = React.useState('');
   const [years, setYears] = useState<string[]>([])
+  const [year, setYear] = useState<string>('2003')
 
   const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value as string);
+    setYear(event.target.value as string);
   };
-
-
-  const rows: number[] = [1, 2, 3, 4, 5]
 
   useEffect(() => {
     async function fetchingData() {
@@ -61,9 +58,7 @@ export default function Home() {
   useEffect(() => {
     async function fetchData(): Promise<void> {
       try {
-        const response = await getPartidas('2003');
-
-        //const resultados: Record<string, TeamStats> = {};
+        const response = await getPartidas(year);
 
         Object.values(response).forEach(obj => {
 
@@ -89,18 +84,7 @@ export default function Home() {
         });
 
         setTimes(sortedTeams.slice(0, 10))
-        // console.log("Top 10 times com mais pontos:");
-        console.log(times)
-        times.forEach((team, index) => {
-          // console.log(`${index + 1}. ${team} - Pontos: ${resultados[team].pontos}`);
-          // console.log(`${index + 1}. ${team} - Estatísticas:`);
-          // console.log(`   Vitorias: ${resultados[team].vitorias}`);
-          // console.log(`   Empates: ${resultados[team].empates}`);
-          // console.log(`   Derrotas: ${resultados[team].derrotas}`);
-          // console.log(`   Gols Pro: ${resultados[team].gols_pro}`);
-          // console.log(`   Gols Contra: ${resultados[team].gols_contra}`);
-          // console.log(`   Saldo: ${resultados[team].saldo}`);
-        });
+
       } catch (error) {
         console.error("An error occurred:", error);
       }
@@ -139,7 +123,7 @@ export default function Home() {
     }
 
     (async () => await fetchData())()
-  }, [])
+  }, [year])
 
   return (
     <div>
@@ -156,18 +140,18 @@ export default function Home() {
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
-            value={age}
+            value={year}
             label="Ano"
             onChange={handleChange}
           >
-            {years.map(year => (
-              <MenuItem key={year} value={Number(year)}>{year}</MenuItem>
+            {years.map(pYear => (
+              <MenuItem key={pYear} value={pYear}>{pYear}</MenuItem>
             ))}
           </Select>
         </FormControl>
 
         <div>
-          <p>Campeonato brasileiro de 2003</p>
+          <p>Campeonato brasileiro de {year}</p>
           <p>Classificação</p>
         </div>
       </Box>
