@@ -1,38 +1,33 @@
-// import { IProducts } from "@/app/types/type"
-// import { getCampeonatos } from "@/lib/getCampeonatos"
-// import getProduct from "@/lib/getProduct"
-// import getProducts from "@/lib/getProducts"
-// import { IPartidas } from "@/types/types"
+'use client'
+import { Header } from "@/app/components/Header"
+import SelectComponent from "@/app/components/SelectComponent"
+import { TableComponent } from "@/app/components/TableComponent"
+import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 
-// // type Params = {
-// //   params: {
-// //     productId: string
-// //   }
-// // }
+type Params = {
+  params: {
+    year: string
+  }
+}
 
-// export default async function UserPage({ params: { year } }: Params) {
-//   //const response: Promise<IPartidas[]> = getPartidas(year)
-//   const partidas = await response
+export default function PartidasPage({ params: { year } }: Params) {
+  const [selectedYear, setSelectedYear] = useState(year);
 
-//   if (!partidas) return (<>NOT FOUND</>)//notFound()
+  if (!selectedYear) return (<>NOT FOUND </>);
 
-//   return (
-//     <>
-//       <h2>titulo</h2>
-//       <div>
-//         <p>
-//           description
-//         </p>
-//       </div>
-//     </>
-//   )
-// }
+  return (
+    <div>
+      {/* header component */}
+      <Header />
 
-// export async function generateStaticParams() {
-//   const productSData: Promise<IPartidas[]> = getPartidas()
-//   const products = await productSData
+      {/* select component */}
+      <SelectComponent selectedYear={selectedYear} setSelectedYear={setSelectedYear} />
 
-//   return products.map(products => ({
-//     productId: products.numero.toString()
-//   }))
-// }
+      {/* table component */}
+      <TableComponent year={selectedYear} />
+    </div>
+  );
+}
+
+

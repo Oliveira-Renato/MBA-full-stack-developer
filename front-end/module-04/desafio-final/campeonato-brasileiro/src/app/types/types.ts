@@ -59,3 +59,13 @@ export interface IPartidas {
 export interface IAnos {
   [key: number]: IPartidas[]
 }
+
+export interface ITimesEstatiscas {
+  pontos: number;
+  vitorias: number;
+  derrotas: number;
+  empates: number;
+  gols_pro: number;
+  gols_contra: number;
+  saldo: number;
+}
