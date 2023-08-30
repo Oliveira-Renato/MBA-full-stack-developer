@@ -1,6 +1,5 @@
-import { title } from "process";
+'use client'
 import styled from "styled-components";
-import { __String } from "typescript";
 
 const Title = styled.h1`
   font-size: 1.5em;
@@ -15,7 +14,11 @@ const Wrapper = styled.section`
   margin: 0 0 2rem 0;
 `;
 
-export function Header({ children }: { children: string }) {
+type ITitle = {
+  children?: string
+}
+
+export function Header({ children }: ITitle) {
   return (
     <Wrapper>
       <Title>

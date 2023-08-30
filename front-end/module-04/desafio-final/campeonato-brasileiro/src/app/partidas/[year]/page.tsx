@@ -3,7 +3,6 @@ import { Header } from "@/app/components/Header"
 import SelectComponent from "@/app/components/SelectComponent"
 import { TableComponent } from "@/app/components/TableComponent"
 import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
 
 type Params = {
   params: {

@@ -1,5 +1,5 @@
-import * as React from 'react';
-import Stack from '@mui/material/Stack';
+'use client'
+import * as React from 'react'
 import Button from '@mui/material/Button';
 import Link from 'next/link'
 import styled from "styled-components";
